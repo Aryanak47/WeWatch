@@ -1,0 +1,172 @@
+/* Global style */
+:root{
+    --white:#fff;
+    --gray:#6D6D6E;
+    --gray-light:#808080;
+    --black:#141414;
+    --primary-color:#00ED82;
+    --primary-dark-color:#27AE60;
+    --primary-text-color:#777;
+}
+*,*::after,*::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html{
+
+    box-sizing: border-box;
+    /* font-size: 62.5%; 1 rem = 10px (10/16) */
+
+}
+body{
+    color:var(--primary-text-color);;
+    font-family: 'Lato', sans-serif;    
+    font-weight: 300;
+    line-height:1.6;
+ 
+
+}
+header{
+    display:flex;
+    align-items: center;
+    background-color: var(--black);
+    padding: 10px 16px;
+
+}
+nav{
+    margin: 0 auto;
+    font-weight: 400;
+}
+.logo{
+    display: flex;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+}
+
+.logo > img{
+    width: 100%;
+}
+.nav__lists{
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav__list{
+    list-style: none;
+    margin-left: 14px;
+}
+a{
+    text-decoration: none;
+}
+.nav__link:link, .nav__link:visited {
+    color:var(--primary-color);
+    text-transform: uppercase;
+    display: block;
+    transition: all .2s;
+}
+
+
+.nav__link:hover, .nav__link:active {
+    border-bottom: 1px solid #fff;
+    transform: translateY(-3px);
+ } 
+
+.nav__left .icon-user{
+    margin-right: 5px;
+
+}
+.icon{
+    height: 16px; 
+    width: 16px; 
+}
+.icon:hover{
+    cursor: pointer;
+}
+.nav__left .icon{
+    fill: #fff;
+}
+/* sign up page */
+.register__main{
+    height:100vh;
+    background-image: linear-gradient(to right,rgba(0, 237, 130,.5),rgb(10 104 62 / 50%)),url(../images/bg.jpg);    background-position: center;
+    background-size: cover;
+    background-blend-mode: screen;
+}
+.form__section{
+    display:flex;
+    align-items: center;
+    justify-content:center;
+     position: relative;
+}
+.form{
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 12px 10px rgb(0 0 0 / 20%);
+    padding: 35px 30px;
+    margin-top:20px;
+
+
+}
+.form__text{
+    font-weight: 400;
+    font-size:18px;
+    margin-bottom: 10px;
+}
+.input__container{
+    position: relative;
+    min-width: 300px;
+    margin-bottom:12px;
+}
+.input__container input{
+    width: 100%;
+    outline: none;
+    border: none;
+    padding:10px 5px;
+    border-bottom:1px solid #777;
+
+}
+.input__container  label {
+    position:absolute;
+    left: 4px;
+    top: 3px;
+    font-size:16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .2s;
+}
+form input:focus ~ label {
+    color: var(--primary-color);
+    top:-12px;
+    opacity: 1;
+    visibility:visible;
+}
+input:focus::placeholder {
+    color: transparent;
+}
+
+.submit-btn{
+    color:#fff;
+    outline:none;
+    border:none;
+    background-color:var(--primary-dark-color);
+    padding:10px 20px;
+    border-radius:10px
+}
+.login__link{
+    display:block;
+    margin-top:10px;
+     color:var(--primary-text-color);
+}
+.error{
+    color: orangered;
+    font-size: 14px;
+}
+  
+
+  
+  
+  
+
