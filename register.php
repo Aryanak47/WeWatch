@@ -1,5 +1,5 @@
 <?php
-    require_once('includes/classes/config.php');
+    require_once('includes/classes/Config.php');
     require_once('includes/classes/FormSanitizer.php');
     require_once('includes/classes/Constant.php');
     require_once('includes/classes/Account.php');
@@ -13,7 +13,11 @@
         $email2 = FormSanitizer::sanitizeEmail($_POST['cEmail']);
         $password = FormSanitizer::sanitizePassword($_POST['password']);
         $password2 = FormSanitizer::sanitizePassword($_POST['cpassword']);
-        $account->register($email,$email2,$username,$firstName,$lastName,$password,$password2);
+        $success->register($email,$email2,$username,$firstName,$lastName,$password,$password2);
+        if($success){
+            header('Location:login.php');
+            die();
+        }
         
     }
 

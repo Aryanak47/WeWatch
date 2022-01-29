@@ -6,7 +6,24 @@
         public function __construct($con) {
             $this->con = $con;
         }
-        
+        public function login($uemail, $password){
+            $found = false;
+            $hashedPassword = hash('sha512',$password);
+            $query = $this->con->prepare("SELECT * FROM users WHERE email=:email OR username=:username AND password=:password");
+            $query->bindValue(':email',$uemail);
+            $query->bindValue(':username',$uemail);
+            $query->bindValue(':password',$hashedPassword);
+            $query->execute();
+            $data = $query->fetch(PDO::FETCH_ASSOC);
+            if ($query->rowCount() > 0 ){
+                $_SESSION['role']=$data['role'];
+                return true;
+            }
+            array_push($this->err,Constant::$loginError);
+            return false;
+        }
+
+
         public function register($em,$em2,$user,$fName,$lName,$pw,$pw2) {
             $this->validFirstName($fName);
             $this->validLastName($lName);
@@ -26,6 +43,7 @@
             $query->bindValue(":pw",$password);
             $query->bindValue(':email',$em);
             $query->bindValue(":uname",$user);
+            $data = $query->fetch(PDO::FETCH_ASSOC);
             return $query->execute();
         }
         private function validFirstName($fn){
