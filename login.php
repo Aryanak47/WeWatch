@@ -9,13 +9,18 @@
         $password =  FormSanitizer::sanitizePassword($_POST['password']);
         $suceess = $account->login($username, $password);
         if($suceess){
-            $_SESSION["login"]='yes';
+            $_SESSION["userLoggedIn"]=$username;
             if($_SESSION['role'] === 'admin') {
                 header("Location:admin/index.php");
                 die();
             }
             header("Location:index.php");
             die();
+        }
+    }
+    function getInputValue($name){
+        if(isset($_POST[$name])){
+            echo $_POST[$name];
         }
     }
 
@@ -59,7 +64,7 @@
     </header>
     <main class="register__main">
         <div class="form__section">
-            <form class="form"  t">
+            <form class="form" method="post">
                 <div class="logo">
                     <img src="assets/images/websitelogo.png" alt="logo" class="logo__image">
                 </div>
@@ -70,7 +75,7 @@
                 
                 ?>
                 <div class="input__container">
-                    <input type="text" id="username" name="uemail" placeholder="username or email" required>
+                    <input type="text" id="username" name="uemail" placeholder="username or email" required value="<?php getInputValue("uemail") ?>">
                     <label for="username">username or email</label>
                 </div>
                 <div class="input__container">

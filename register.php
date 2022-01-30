@@ -20,6 +20,11 @@
         }
         
     }
+    function getInputValue($name){
+        if(isset($_POST[$name])){
+            echo $_POST[$name];
+        }
+    }
 
 
 
@@ -74,21 +79,21 @@
                 <h2>Sign Up</h2>
                 <p class="form__text">To continue to WeWatch</p>
                 <div class="input__container">
-                    <input type="text" id="firstName" name="firstName" placeholder="First name" required>
+                    <input type="text" id="firstName" name="firstName" placeholder="First name" required value="<?php getInputValue("firstName") ?>">
                     <label for="firstName">First name</label>
                     <?php
                         echo  '<div class="error">'.$account->getErrorMessage(Constant::$firstNameError)."</div>";
                     ?>
                 </div>
                 <div class="input__container">
-                    <input type="text" id="lastName" name="lastName" placeholder="Last name" required>
+                    <input type="text" id="lastName" name="lastName" placeholder="Last name" required value="<?php getInputValue("lastName") ?>">
                     <label for="lastName">Last name</label>
                        <?php
                         echo  '<div class="error">'.$account->getErrorMessage(Constant::$lastNameError)."</div>";
                     ?>
                 </div>
                 <div class="input__container">
-                    <input type="text" id="username" name="username" placeholder="username" required>
+                    <input type="text" id="username" name="username" placeholder="username" required value="<?php getInputValue("username") ?>">
                     <label for="username">username</label>
                        <?php
                         echo  '<span class="error">'.$account->getErrorMessage(Constant::$usernameError)."</span>";
@@ -96,7 +101,7 @@
                     ?>
                 </div>
                 <div class="input__container">
-                    <input type="text" id="email" name="email" placeholder="Email" required>
+                    <input type="text" id="email" name="email" placeholder="Email" required value="<?php getInputValue("email") ?>">
                     <label for="email">Email</label>
                        <?php
                             echo  '<span class="error">'.$account->getErrorMessage(Constant::$emailMatchError)."</span>";
@@ -105,7 +110,7 @@
                     ?>
                 </div>
                 <div class="input__container">
-                    <input type="text" id="cEmail" name="cEmail" placeholder="Confirm email" required>
+                    <input type="text" id="cEmail" name="cEmail" placeholder="Confirm email" required value="<?php getInputValue("cEmail") ?>">
                     <label for="cEmail">Confirm email</label>
                
                 </div>

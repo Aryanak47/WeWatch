@@ -9,8 +9,7 @@
         public function login($uemail, $password){
             $found = false;
             $hashedPassword = hash('sha512',$password);
-            $query = $this->con->prepare("SELECT * FROM users WHERE email=:email OR username=:username AND password=:password");
-            $query->bindValue(':email',$uemail);
+            $query = $this->con->prepare("SELECT * FROM users WHERE username=:username AND password=:password");
             $query->bindValue(':username',$uemail);
             $query->bindValue(':password',$hashedPassword);
             $query->execute();
