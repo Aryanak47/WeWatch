@@ -13,7 +13,7 @@
         $email2 = FormSanitizer::sanitizeEmail($_POST['cEmail']);
         $password = FormSanitizer::sanitizePassword($_POST['password']);
         $password2 = FormSanitizer::sanitizePassword($_POST['cpassword']);
-        $success->register($email,$email2,$username,$firstName,$lastName,$password,$password2);
+        $success = $account->register($email,$email2,$username,$firstName,$lastName,$password,$password2);
         if($success){
             header('Location:login.php');
             die();

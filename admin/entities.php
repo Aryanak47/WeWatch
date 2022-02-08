@@ -1,17 +1,41 @@
-<?php 
-    require_once('../includes/classes/Config.php');    
+<?php
+    require_once('../includes/classes/Config.php');
+
+
     if(isset($_POST["upload"])){
 
         
         $video_file  =  $_FILES["video"];
+        $image_file  =  $_FILES["image"];
         $name = $_POST["name"];
-        $desc = $_POST["description"];
-        $ep = $_POST["ep"];
-        $season = $_POST["season"];
-        $dur = $_POST["duration"];
-        $movie = $_POST["ismovie"];
-        $rel = $_POST["release"];
-        $title = $_POST["title"];
+        $category = $_POST["category"];
+
+        // image info
+        $img_info = getimagesize($image_file["tmp_name"]);
+        $img_size = $image_file["size"];
+        $img_tmp = $image_file["tmp_name"];
+        $img_name = $image_file["name"];
+        $img_extension = explode('.',$img_name);
+        $img_extension = strtolower(end($img_extension));
+        $allowedImage = array("image/png", "image/jpeg", "image/gif", "image/jpg");
+        $image_error = "";
+
+        if(in_array($img_info["mime"],$allowedImage)){
+              // thumbnail image should be equal or less than 30 mb
+            if($img_size <= 10485760){
+                $i_file = date('YmdHis') . uniqid().'.'.$img_extension;
+                $img_file = $i_file;
+                $pathToUpload = "../entities/thumbnails/".$img_file;
+                move_uploaded_file($img_tmp,$pathToUpload);
+            }else {
+                # code...
+                $image_error =  "too large";
+            }
+        }else{
+            $image_error =  "This image extension not allowed !";
+            
+        }
+        echo $image_error;
 
         $video_size = $video_file["size"];
         $video_type = $video_file["type"];
@@ -27,7 +51,7 @@
             if($video_size <= 31457280){
                 $v_file = date('YmdHis') . uniqid().'.'.$video_extension;
                 $file = $v_file;
-                $videoToUpload = "../entities/videos/".$file;
+                $videoToUpload = "../entities/previews/".$file;
                 move_uploaded_file($video_tmp,$videoToUpload);
             }else {
                 # code...
@@ -38,29 +62,26 @@
         }
         echo $video_error;
         if(empty($video_error) && empty($image_error)){
-            $query = $conn->prepare("INSERT INTO videos (title,description,isMovie,releaseDate,duration,season,episode,entityId,filePath)
-                                    VALUES(:title,:desc,:movie,:rel,:duration,:season,:episode,:entity,:filePath)");
-            $query->bindValue(':title',$title);
-            $query->bindValue(':desc',$desc);
-            $query->bindValue(':movie',$movie);
-            $query->bindValue(':rel',$rel);
-            $query->bindValue(':duration',$dur);
-            $query->bindValue(':season',$season);
-            $query->bindValue(':episode',$ep);
-            $query->bindValue(':entity',$name);
-            $query->bindValue(':filePath',"entities/videos/" . $file);
+            $query = $conn->prepare("INSERT INTO entities(name,categoryId,thumbnail,preview)VALUES(:nam,:cat,:thumbnail,:preview)");
+            $query->bindValue(':nam',$name);
+            $query->bindValue(':cat',$category);
+            $query->bindValue(':thumbnail',"entities/thumbnails/" . $img_file);
+            $query->bindValue(':preview',"entities/previews/" . $file);
             $query->execute();
             if( $query->rowCount() > 0 ) {
-                // header("Refresh:0");
-                // die();
+                header("Refresh:0");
+                die();
             }
             
         }
     }
 
 
-?>
 
+
+
+
+?>
 
 
 
@@ -71,7 +92,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video</title>
+    <title>Entitiy</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -111,72 +132,63 @@
                 </nav>
             </header>
             <div class="container">
-                <h1> Add Video </h1>
-                <form class="box py-2"  method="POST" enctype="multipart/form-data">
+                <h1> Add Entitiy </h1>
+                <form class="box py-2" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control" placeholder="Title" name="title" value="" required>
+                        <label for="title">Name</label>
+                        <input type="text" class="form-control" placeholder="Title" name="name" value="" required>
                     </div>
-                    <div class="form-group">
-                        <label for="releaseDate">Release Date</label>
-                        <input type="text" class="form-control" placeholder="2022-01-01" name="release" value="" required>
-                    
-                    </div>
-                    <div class="form-group">
-                        <label for="ismovie">Movie</label>
-                        <select class="form-control" id="ismovie" name="ismovie">
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="duration">Duration</label>
-                        <input type="text" class="form-control" placeholder="2:15" name="duration" value="" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="season">Season</label>
-                        <input type="text" class="form-control" placeholder="1" name="season" value="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ep">Episodes</label>
-                        <input type="text" class="form-control" placeholder="1" name="ep" value="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label  for="description">Description</label>
-                        <input type="text" class="form-control" placeholder="description...." name="description" value="" required>
-                    </div>
-             
-                
-               
                     <div class="row mb-3">
                         <div class="col-md-12">
-                        <label class="" for="episodes">Name</label>
-                        <select class="browser-default custom-select" name="name">
-                        <?php
-                            $queryEn = $conn->prepare("SELECT * FROM entities");
-                            $queryEn->execute();
-                            $ens = $queryEn->fetchAll();
-                            foreach ($ens as $en) {
-                            ?>
-                                <option value=<?= $en["id"] ?>><?= $en["name"] ?></option>
+                        <select class="browser-default custom-select" name="category">
                             <?php
-                            }
-                            ?>
+                                $queryCategory = $conn->prepare("SELECT * FROM categories");
+                                $queryCategory->execute();
+                                $categories = $queryCategory->fetchAll();
+                                foreach ($categories as $category) {
+                                ?>
+                                    <option value=<?= $category["id"] ?>><?= $category["name"] ?></option>
+                                <?php
+                                }
+                                ?>
                         </select>
                         </div>
                     </div>
-                    <div class="form-group">                  
-                        <label for="video">Video</label>
-                        <input type="file" name="video" id="video" class="form-control-file">  
+
+                    <div class="row">
+                    <div class="col">
+                        <table>
+                        <tr>
+                            <td> <label for=""><b>Thumbnail : </b></label> </td>
+                            <td>
+                                <div>
+                                    <input type="file" name="image" required>
+                                </div>
+                            </td>
+                        </tr>
+                        </table>
                     </div>
-                   <br><br>
+                    <div class="col">
+                        <table>
+                        <tr>
+                            <td> <label for=""><b>Preview Video : </b></label> </td>
+                            <td>
+                                <div>
+                                    <input type="file" name="video"  required>
+                                </div>
+                            </td>
+                        </tr>
+                        </table>
+
+                    </div>
+                    </div> <br><br>
                     <div class="signupbutton">
-                        <input type="submit" class ="btn btn-success btn-lg" name="upload" value="Submit" required>
+                        <input type="submit" class ="btn btn-success btn-lg" name="upload" value="Submit" >
                     </div>
                 </form>
         </div>
+        </div>
     </div>
-
     
 </body>
 <script src="js/script.js"></script>
