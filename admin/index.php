@@ -46,9 +46,9 @@
     </head>
     <body>
         <div class="layout-container">
-            <?php include 'side-nav.php'; ?>
+            <?php include 'side-nav.inc.php'; ?>
             <div class="main">
-                <?php include 'header.php'; ?>
+                <?php include 'header.inc.php'; ?>
            
                 <main class="user-info">
                     <h2 class="title py-4">Manage Users</h2>
@@ -74,7 +74,7 @@
                                 <?php $ban = $user["ban"] == 1 ?>
                                 <td class="status-content"><span class="status <?php echo $ban? "text-danger":"text-success" ?>">&bull;</span><?php echo  $ban ?  "Suspended": "Active";?></td>
                                 <td>
-                                    <a href="deleteUser.php?id=<?= $user["id"]?>" class="delete" title="Delete" data-toggle="tooltip"><i class="fa <?php echo $ban ? "fa-unlock":"fa-lock" ?>" aria-hidden="true"></i></a>
+                                    <a href="deleteUser.php?id=<?= $user["id"]?>" class="delete" title="<?php echo $ban ? "unban":"ban" ?>" data-toggle="tooltip"><i class="fa <?php echo $ban ? "fa-unlock":"fa-lock" ?>" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

@@ -82,7 +82,7 @@
 <body>
     <div class="layout-container">
         
-        <?php include 'side-nav.php'; ?>
+        <?php include 'side-nav.inc.php'; ?>
         <div class="main ">
             <header class="header d-flex justify-content-end ">
                 <nav class="user-nav">

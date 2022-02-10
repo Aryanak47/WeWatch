@@ -1,9 +1,6 @@
 
 <?php 
 
-
-
-// 74-30 == 44
    require_once('../includes/classes/config.php');
    require_once('../includes/classes/FormSanitizer.php');
    $title = "Movies";
@@ -82,9 +79,9 @@
 </head>
 <body>
     <div class="layout-container">
-        <?php include 'side-nav.php'; ?>
+        <?php include 'side-nav.inc.php'; ?>
         <div class="main">
-            <?php include 'header.php'; ?>
+            <?php include 'header.inc.php'; ?>
             <main class="video-info">
                 <h2 class="title py-4">Manage Movies</h2>
                 <div class="d-flex flex-row">
