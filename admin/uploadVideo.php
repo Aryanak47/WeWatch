@@ -1,5 +1,6 @@
 <?php 
-    require_once('../includes/classes/Config.php');  
+    require_once('../includes/config.php');  
+    require_once('../includes/checkAdmin.php');
     
     if(isset($_FILES["video"])){
         $video_file  =  $_FILES["video"];
@@ -38,8 +39,8 @@
         $allowedVideo = array("mp4","flv","ogg","vob","mov","mpeg","mpg","mkv","wmv","avi");
         if(in_array($video_type,$allowedVideo)){
             $folder = "../entities/videos/";
-        //     // preview video should be equal or less than 30 mb
-            if($video_size <= 31457280){
+        //     // preview video should be equal or less than 2gb
+            if($video_size <= 2147483648 ){
                 $temp_file_path =  $folder.date('YmdHis') . uniqid().'.'.$video_extension;;
                 if(move_uploaded_file($video_tmp,$temp_file_path)){
                     $final_file =date('YmdHis') . uniqid().'.mp4';

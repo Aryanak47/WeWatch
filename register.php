@@ -1,5 +1,5 @@
 <?php
-    require_once('includes/classes/Config.php');
+    require_once('includes/config.php');
     require_once('includes/classes/FormSanitizer.php');
     require_once('includes/classes/Constant.php');
     require_once('includes/classes/Account.php');

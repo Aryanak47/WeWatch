@@ -1,5 +1,6 @@
 <?php 
-    require_once('../includes/classes/Config.php');    
+    require_once('../includes/config.php');    
+    require_once('../includes/checkAdmin.php');
 ?>
 
 <!DOCTYPE html>
@@ -161,6 +162,7 @@
         _("progressBar").classList.remove("hidden");
         _("progressBar").value = Math.round(percent);
         _("status").innerHTML = Math.round(percent)+"% uploaded... please wait";
+        console.log(percent);
     }
     function completeHandler(event){
         $("#status").html("")

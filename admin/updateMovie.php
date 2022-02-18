@@ -1,5 +1,6 @@
 <?php
-    require_once('../includes/classes/config.php');
+    require_once('../includes/config.php');
+    require_once('../includes/checkAdmin.php');
     if(!isset($_GET["id"])){
         header('Location:movies.php');
         die("Id needs to be provided !");

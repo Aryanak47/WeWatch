@@ -1,3 +1,4 @@
+
 <header class="header">
 <form method="GET" class="search">
     <input type="search" name="search" class="search__input" placeholder="Search <?= $title ?>">

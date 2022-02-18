@@ -1,6 +1,7 @@
 <?php 
     ob_start();
     session_start();
+    $SITE_URL="http://localhost/wewatch";
 
     date_default_timezone_set('Asia/Kathmandu');
     try {

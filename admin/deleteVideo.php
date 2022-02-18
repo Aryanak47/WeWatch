@@ -1,5 +1,5 @@
 <?php 
-    require_once("../includes/classes/Config.php");
+    require_once("../includes/config.php");
     if(isset($_GET["id"])){
         $videoid = $_GET["id"];
         $page = $_GET["page"];

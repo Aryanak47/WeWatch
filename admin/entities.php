@@ -1,5 +1,6 @@
 <?php
-    require_once('../includes/classes/Config.php');
+    require_once('../includes/config.php');
+    require_once('../includes/checkAdmin.php');
 
 
     if(isset($_POST["upload"])){

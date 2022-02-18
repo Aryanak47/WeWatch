@@ -1,7 +1,8 @@
 
 <?php 
 
-   require_once('../includes/classes/config.php');
+   require_once('../includes/config.php');
+   require_once('../includes/checkAdmin.php');
    require_once('../includes/classes/FormSanitizer.php');
    $title = "Movies";
    $limit = 8;
