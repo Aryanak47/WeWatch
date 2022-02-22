@@ -3,23 +3,7 @@
     require_once('../includes/checkAdmin.php');
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video</title>
-    <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-</head>
-<body>
+<?php include 'top.inc.php'; ?>
     <div class="layout-container">
         <?php include 'side-nav.inc.php'; ?>
         <div class="main">
@@ -51,63 +35,74 @@
             <div class="container">
                 <h1> Add Video </h1>
                 <form class="box py-2" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control" placeholder="Title" id="title" name="title" value="" required>
+                    <div class="row">
+                        <div class="col">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" placeholder="Title" id="title" name="title" value="" required>
+                        </div>
+                        <div class="col">
+                            <label class="" for="name">Name</label>
+                            <select class="browser-default custom-select" id="name" name="name">
+                            <?php
+                                $queryEn = $conn->prepare("SELECT * FROM entities");
+                                $queryEn->execute();
+                                $ens = $queryEn->fetchAll();
+                                foreach ($ens as $en) {
+                                ?>
+                                    <option value=<?= $en["id"] ?>><?= $en["name"] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                      
                     </div>
-                    <div class="form-group">
-                        <label for="releaseDate">Release Date</label>
-                        <input type="text" id="releaseDate" class="form-control" placeholder="2022-01-01" name="release" value="" required>
-                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="releaseDate">Release Date</label>
+                            <input type="text" id="releaseDate" class="form-control" placeholder="2022-01-01" name="release" value="" required>
+                        </div>
+                      
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ismovie">Movie</label>
+                                <select class="form-control" id="ismovie" name="ismovie" onChange="update()">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="ismovie">Movie</label>
-                        <select class="form-control" id="ismovie" name="ismovie">
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div>
-                   
-                    <div class="form-group">
+                
+                    <div class="row movie-select" hidden>
+                    <div class="form-group col-md-6">
                         <label for="season">Season</label>
                         <input type="text" class="form-control" id="season" placeholder="1" name="season" value="0" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-6">
                         <label for="ep">Episodes</label>
                         <input type="text" class="form-control" id="ep" placeholder="1" name="ep" value="0" required>
                     </div>
+
+                    </div>
+                   
+                
                     <div class="form-group">
                         <label  for="description">Description</label>
                         <input type="text" class="form-control" id="description" placeholder="description...." name="description" value="" required>
                     </div>
-             
-                
-               
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                        <label class="" for="name">Name</label>
-                        <select class="browser-default custom-select" id="name" name="name">
-                        <?php
-                            $queryEn = $conn->prepare("SELECT * FROM entities");
-                            $queryEn->execute();
-                            $ens = $queryEn->fetchAll();
-                            foreach ($ens as $en) {
-                            ?>
-                                <option value=<?= $en["id"] ?>><?= $en["name"] ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">                  
+                                <label for="video"><b>Video : <b></label>
+                                <input type="file" name="video" id="video" class="form-control-file" required>  
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">                  
-                        <label for="video">Video</label>
-                        <input type="file" name="video" id="video" class="form-control-file" required>  
-                    </div>
+                
                     <progress id="progressBar" class="hidden" value="0" max="100" style="width:300px;"></progress>
                     <h3 id="status"></h3>
                     <p id="loaded_n_total"></p>
-                   <br><br>
                     <div class="signupbutton">
                         <button type="button" onclick="uploadFile()" class ="btn btn-success btn-lg" id="uploadBtn" name="upload">Submit</button>
                     </div>
@@ -119,10 +114,16 @@
     
 </body>
 <script>
+    function update(){
+        console.log("change status")
+        const ismovie =  $(".movie-select").prop("hidden")
+        $(".movie-select").prop("hidden",!ismovie);
+    }
 
     function _(el){
         return document.getElementById(el);
     }
+
     function uploadFile(){
         $(".error").remove();
         console.log("Uploading file...");
@@ -162,7 +163,9 @@
         _("progressBar").classList.remove("hidden");
         _("progressBar").value = Math.round(percent);
         _("status").innerHTML = Math.round(percent)+"% uploaded... please wait";
-        console.log(percent);
+        if(percent >= 100){
+            _("status").innerHTML = "Converting file to mp4... please wait";
+        }
     }
     function completeHandler(event){
         $("#status").html("")

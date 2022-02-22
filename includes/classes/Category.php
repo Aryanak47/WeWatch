@@ -38,6 +38,7 @@
                         $image =  $entity->getThumbnail();
                         $name =  $entity->getName();
                         $min = explode(':',$entity->getDuration())[0];
+                        $id = $entity->getId();
                         $html .= "<li class='slide-item'>
                         <div class='block-images position-relative'>
                           <div class='img-box'>
@@ -52,10 +53,10 @@
                               <span class='text-white'>$min  minutes</span>
                             </div>
                             <div class='hover-buttons'>
-                              <span class='btn btn-hover iq-button'>
+                              <a href='entity.php?id=$id' class='btn btn-hover iq-button'>
                                 <i class='fa fa-play mr-1'></i>
                                 Play Now
-                              </span>
+                              </a>
                             </div>
                           </div>
                           <div class='block-social-info'>

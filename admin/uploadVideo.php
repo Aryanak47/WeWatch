@@ -41,18 +41,25 @@
             $folder = "../entities/videos/";
         //     // preview video should be equal or less than 2gb
             if($video_size <= 2147483648 ){
-                $temp_file_path =  $folder.date('YmdHis') . uniqid().'.'.$video_extension;;
+                $temp_file =date('YmdHis') . uniqid().'.'.$video_extension;
+                $temp_file_path =  $folder.$temp_file;
                 if(move_uploaded_file($video_tmp,$temp_file_path)){
-                    $final_file =date('YmdHis') . uniqid().'.mp4';
-                    $final_file_path = $folder.$final_file;
-                    if(!comvertVideoToMp4($temp_file_path,$final_file_path)){
-                        return false;
-                        $video_error =  "Could not convert video to mp4.";
-                    }
-                    if(!deleteFile($temp_file_path)){
-                        return false;
-                        $video_error =  "Could not delete the  file";
-
+                    $final_file_path = $temp_file_path;
+                    $final_file = $temp_file;
+                    $mp4 = true;
+                    if($video_type != 'mp4'){
+                        $mp4 = false;
+                        $final_file =date('YmdHis') . uniqid().'.mp4';
+                        $final_file_path =$folder."change".$final_file;
+                        if(!comvertVideoToMp4($temp_file_path,$final_file_path)){
+                            return false;
+                            $video_error =  "Could not convert video to mp4.";
+                        }
+                        if(!deleteFile($temp_file_path)){
+                            return false;
+                            $video_error =  "Could not delete the  file";
+    
+                        }
                     }
                     $duration = getVideoDuration($final_file_path);
                 };   
@@ -73,7 +80,11 @@
                 });
             </script>';
             
-            $duration = date("H:i",strtotime($duration));
+            $duration = date("G:i:s",strtotime($duration));
+            $time = explode(":",$duration);
+            $min = convertToMin($time);
+            $sec =(int) $time[2];
+            $duration = "$min:$sec";
             $query = $conn->prepare("INSERT INTO videos (title,description,isMovie,releaseDate,duration,season,episode,entityId,filePath)
                                     VALUES(:title,:desc,:movie,:rel,:duration,:season,:episode,:entity,:filePath)");
             $query->bindValue(':title',$title);
@@ -130,6 +141,13 @@
     function getVideoDuration($filePath){
         $ffprobe = realpath("../ffmpeg/bin/ffprobe.exe");
         return shell_exec("$ffprobe -v error -select_streams v:0 -show_entries stream=duration -of default=noprint_wrappers=1:nokey=1 -sexagesimal $filePath");
+
+    }
+    function convertToMin($time){
+        $hrs = (int) $time[0];
+        $minutes = (int) $time[1];
+        $minutes  = $hrs * 60 + $minutes;
+        return $minutes;
 
     }
 

@@ -73,7 +73,6 @@
               <div class="col-sm-12 overflow-hidden">
                 <div class="iq-main-header d-flex align-items-center justify-content-between">
                   <h4 class="main-title">New Movies</h4>
-                  <!-- <a href="#" class="iq-view-all">View All</a> -->
                 </div>
                 <div class="favorite-contens">
                   <ul class="favorites-slider list-inline row p-0 mb-0">
@@ -95,10 +94,12 @@
                             <span class="text-white"><?= $min ?> minutes</span>
                           </div>
                           <div class="hover-buttons">
-                            <span class="btn btn-hover iq-button">
-                              <i class="fa fa-play mr-1"></i>
-                              Play Now
-                            </span>
+                            <a href='entity.php?id=<?=$newEntity->getId() ?>' class='btn btn-hover iq-button'>
+                              <span>
+                                <i class="fa fa-play mr-1"></i>
+                                Play Now
+                              </span>
+                            </a>
                           </div>
                         </div>
                         <div class="block-social-info">
@@ -156,14 +157,8 @@
                           </a>
                           <div class="block-description">
                             <h5><?= $trendingEntity->getName() ?></h5>
-                            <div class="movie-time d-flex align-items-center my-2">
-                              <div class="badge badge-secondary p-1 mr-2">
-                                10+
-                              </div>
-                              <span class="text-white">8 Parts</span>
-                            </div>
-                            <div class="hover-buttons">
-                              <a href="#" class="btn btn-hover" tabindex="0">
+                            <div class="hover-buttons mt-2">
+                              <a href="entity.php?id=<?= $trendingEntity->getId() ?>" class="btn btn-hover" tabindex="0">
                                 <i class="fa fa-play mr-1" aria-hidden="true"></i>
                                 Play Now
                               </a>

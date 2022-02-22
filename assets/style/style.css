@@ -618,6 +618,7 @@ li.slide-item:hover .block-images{
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: flex-start;
 }
 
 .block-description>h6{
@@ -628,6 +629,10 @@ li.slide-item:hover .block-images{
     color: #fff;
     text-transform: capitalize;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width:200px;
 }
 .music-play-lists li{
     position: relative;
@@ -1206,6 +1211,68 @@ background: rgba(0, 0, 0, 0.8);
         font-size: 35px;
     }
 }
+
+
+/* Entity page */
+
+.errorBanner {
+    color: #fff;
+    position: absolute;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+}
+
+.season {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 50px;
+    margin: 20px 0px;
+}
+
+.episodeContainer {
+    display: inline-flex;
+    justify-content: center;
+    margin-right: 4px;
+}
+
+.episodeContainer .contents {
+    display: flex;
+    flex-direction: column;
+    width: 230px;
+}
+
+.episodeContainer img {
+    width: 230px;
+    height: 129px;
+    object-fit: cover;
+}
+
+.episodeContainer .videoInfo h4,
+.episodeContainer .videoInfo span {
+    color: #fff;
+    width: 100%;
+    white-space: normal;
+}
+
+.episodeContainer .videoInfo {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.previewCategories.noScroll .category .entities {
+    white-space: normal;
+}
+
+
+
+
+
+
+
+
+
 
 /* ***************** footer **************** */
 .footer-top{

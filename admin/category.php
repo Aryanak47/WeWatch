@@ -1,7 +1,9 @@
 <?php 
     require_once('../includes/config.php');
     require_once('../includes/checkAdmin.php');
+    
     if(isset($_POST['update'])){
+        
         $id = $_POST["updateId"];
         $category = $_POST["category"];
         $category = ucfirst($category);
@@ -9,16 +11,20 @@
         $query->bindValue(':nam', $category);
         $query->bindValue(':id', $id);
         $query->execute();
-        header("Refresh:0");
-        die();
+        $msg = "
+        <script>
+        swal('Success!', 'Updated Successfully!', 'success')
+        </script>";
+      
     }
     if(isset($_POST['deleteBtn'])){
         $id = $_POST["deleteBtn"];
         $query = $conn->prepare("DELETE FROM  categories   where id =:id");
         $query->bindValue(':id', $id);
         $query->execute();
-        header("Refresh:0");
-        die();
+            $msg = "<script>
+            swal('Success!', 'Deleted Successfully!', 'success')
+            </script>";
     }
     if(isset($_POST["submit"])){
         $category = $_POST["category"];
@@ -26,9 +32,17 @@
         $query = $conn->prepare("INSERT INTO categories (name) VALUES(:category)");
         $query->bindValue(':category', $category);
         $query->execute();
-        header("Refresh:0");
-        die();
+        if( $query->rowCount() > 0 ) {
+            $msg =  "
+            <script>
+            swal('Success!', 'New Category Added Successfully!', 'success')
+            </script>";
+            
+            ;
+        }
+     
     }
+   
     $query = $conn->prepare("SELECT * FROM categories");
     $query->execute();
     $categories = $query->fetchAll();
@@ -46,43 +60,8 @@
 
 
 
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Category</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        .box{
-            border-top: 4px solid #00ED82;
-            margin: 0 10px;
-        }
-        .row{
-            margin: 0
-        }
-        table{
-            overflow-y: scroll;
-            display: block;
-            height: 50vh;
-
-        }
- 
-  
-    }
-    </style>
-</head>
-<body>
-    <div class="layout-container">
-        
+    <?php include 'top.inc.php'; ?>
+    <div class="layout-container category">
         <?php include 'side-nav.inc.php'; ?>
         <div class="main ">
             <header class="header d-flex justify-content-end ">
@@ -93,23 +72,22 @@
                             <span class="user-nav__user-name">Admin</span>
                         </div>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a href="userProfile.php" class="dropdown-item">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                <span>Profile</span>
-                            
-                            </a>
-                            <a href="uploadMovie.php" class="dropdown-item"> 
-                                <i class="fa fa-upload" aria-hidden="true"></i> <span>Upload Movie</span>
-                            </a>
-                            <a href="uploadSeries.php" class="dropdown-item">
-                                <i class="fa fa-upload" aria-hidden="true"></i>
-                                <span>Upload Series</span>
-                            </a>
+                        <a href="video.php" class="dropdown-item"> 
+                            <i class="fa fa-upload" aria-hidden="true"></i> <span>Upload Video</span>
+                        </a>
+                        <a href="userProfile.php" class="dropdown-item">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span>Logout</span>
+                        
+                        </a>
                         </div>
                     </div>
 
                 </nav>
             </header>
+            <?php if (isset($msg)) {
+                echo $msg;
+            } ?>
               
             <h2>Add Category</h2>
                 <div class="row  mt-5">
@@ -120,7 +98,7 @@
                             <form class="form" method="post">
                                 <div class="box-body">
                                         <label for="category"></label>
-                                        <input type="text" id="category" name="category" class="form-control" value=<?php getInputValue() ?> >
+                                        <input type="text" id="category" required name="category" class="form-control" value=<?php getInputValue() ?> >
                                         <?php if(isset($_POST['editBtn'])){ $id = $_POST['editBtn']; ?>
                                             <input class='mt-4 btn btn-success' name='update' type='submit' value='Update'>
                                             <input type='hidden' name='updateId' value=<?php echo $_POST["editBtn"] ?> 
@@ -166,4 +144,5 @@
    
     
 </body>
+
 </html>

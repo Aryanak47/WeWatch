@@ -1,13 +1,15 @@
 
 <header class="header">
-<form method="GET" class="search">
-    <input type="search" name="search" class="search__input" placeholder="Search <?= $title ?>">
-    <button class="search__button">
-        <svg class="search__icon">
-            <use xlink:href="img/sprite.svg#icon-magnifying-glass"></use>
-        </svg>
-    </button>
-</form>
+    <?php if(isset($title)){ ?>
+        <form method="GET" class="search">
+            <input type="search" name="search" class="search__input" placeholder="Search <?= $title ?>">
+            <button class="search__button">
+                <svg class="search__icon">
+                    <use xlink:href="img/sprite.svg#icon-magnifying-glass"></use>
+                </svg>
+            </button>
+        </form>
+    <?php } ?>
 
 <nav class="user-nav">
     <!-- <div class="user-nav__icon-box">
@@ -28,18 +30,16 @@
             <span class="user-nav__user-name">Admin</span>
         </div>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a href="video.php" class="dropdown-item"> 
+                <i class="fa fa-upload" aria-hidden="true"></i> <span>Upload Video</span>
+            </a>
             <a href="userProfile.php" class="dropdown-item">
                 <i class="fa fa-user" aria-hidden="true"></i>
-                <span>Profile</span>
+                <span>Logout</span>
               
             </a>
-            <a href="uploadMovie.php" class="dropdown-item"> 
-                <i class="fa fa-upload" aria-hidden="true"></i> <span>Upload Movie</span>
-            </a>
-            <a href="uploadSeries.php" class="dropdown-item">
-                <i class="fa fa-upload" aria-hidden="true"></i>
-                <span>Upload Series</span>
-            </a>
+         
+         
         </div>
     </div>
 

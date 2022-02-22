@@ -70,8 +70,18 @@
             $query->bindValue(':preview',"entities/previews/" . $file);
             $query->execute();
             if( $query->rowCount() > 0 ) {
-                header("Refresh:0");
-                die();
+                $msg =  "
+                <script>
+                swal('Success!', 'New Entity Added Successfully!', 'success')
+                </script>";
+                ;
+            }else{
+                $msg =  "
+                <script>
+                swal('Failed!', 'Something went wrong!', 'warning')
+                </script>";
+                ;
+
             }
             
         }
@@ -87,23 +97,7 @@
 
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entitiy</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
-    <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+<?php include 'top.inc.php'; ?>
     <div class="layout-container">
         <?php include 'side-nav.inc.php'; ?>
         <div class="main">
@@ -115,23 +109,22 @@
                             <span class="user-nav__user-name">Admin</span>
                         </div>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a href="userProfile.php" class="dropdown-item">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                <span>Profile</span>
-                            
-                            </a>
-                            <a href="uploadMovie.php" class="dropdown-item"> 
-                                <i class="fa fa-upload" aria-hidden="true"></i> <span>Upload Movie</span>
-                            </a>
-                            <a href="uploadSeries.php" class="dropdown-item">
-                                <i class="fa fa-upload" aria-hidden="true"></i>
-                                <span>Upload Series</span>
-                            </a>
+                        <a href="video.php" class="dropdown-item"> 
+                            <i class="fa fa-upload" aria-hidden="true"></i> <span>Upload Video</span>
+                        </a>
+                        <a href="userProfile.php" class="dropdown-item">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span>Logout</span>
+                        
+                        </a>
                         </div>
                     </div>
 
                 </nav>
             </header>
+            <?php if (isset($msg)) {
+                echo $msg;
+            } ?>
             <div class="container">
                 <h1> Add Entitiy </h1>
                 <form class="box py-2" method="POST" enctype="multipart/form-data">
