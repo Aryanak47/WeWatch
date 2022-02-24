@@ -7,7 +7,7 @@
         }
 
         public function getCategories(){
-                $query = $this->conn->prepare("SELECT * FROM categories ORDER BY RAND() LIMIT 4");
+                $query = $this->conn->prepare("SELECT * FROM categories ORDER BY RAND() LIMIT 5");
                 $query->execute();
                 $categoryHtml = "";
                 while($row = $query->fetch(PDO::FETCH_ASSOC)){
@@ -20,12 +20,43 @@
                 return $categoryHtml;
 
         }
+        public function getTvShowsCategory(){
+          $query = $this->conn->prepare("SELECT * FROM categories ORDER BY RAND()");
+          $query->execute();
+          $categoryHtml = "";
+          while($row = $query->fetch(PDO::FETCH_ASSOC)){
+              $categoryId = $row['id'];
+              $categoryTitle = $row['name'];
+              $entity= new EntityProvider($this->conn, $this->username);
+              $cond = "and entities.categoryId=$categoryId";
+              $entities = $entity->getTvShowEntities(7,$cond);
+              $categoryHtml .= $this->getCategorySectionHtml($entities,$categoryTitle);
+          }
+          return $categoryHtml;
+
+        }
+        public function getMoviesCategory(){
+          $query = $this->conn->prepare("SELECT * FROM categories ORDER BY RAND()");
+          $query->execute();
+          $categoryHtml = "";
+          while($row = $query->fetch(PDO::FETCH_ASSOC)){
+              $categoryId = $row['id'];
+              $categoryTitle = $row['name'];
+              $entity= new EntityProvider($this->conn, $this->username);
+              $cond = "and entities.categoryId=$categoryId";
+              $entities = $entity->getMovieEntities(7,$cond);
+              $categoryHtml .= $this->getCategorySectionHtml($entities,$categoryTitle);
+          }
+          return $categoryHtml;
+
+        }
         private function getCategorySectionHtml($entities,$title){
            if(empty($entities)){
                return "";
            }
            
-            $html = "<section id='iq-upcoming-movie'>
+            $html = "
+            <section id='iq-upcoming-movie'>
             <div class='container-fluid'>
               <div class='row'>
                 <div class='col-sm-12 overflow-hidden'>

@@ -1,4 +1,9 @@
 
+$(document).scroll(function() {
+    var isScrolled = $(this).scrollTop() > $(".topBar").height();
+    $(".topBar").toggleClass("scrolled", isScrolled);
+})
+
 function volumeToggle(button) {
     var muted = $(".previewVideo").prop("muted");
     $(".previewVideo").prop("muted", !muted);
@@ -13,74 +18,100 @@ function previewEnded() {
     $(".previewImage").prop("hidden",false);
 }
 
+
+function goBack() {
+    window.history.back();
+}
+
+function startHideTimer() {
+    var timeout = null;
+    
+    $(document).on("mousemove", function() {
+        clearTimeout(timeout);
+        $(".watchNav").fadeIn();
+
+        timeout = setTimeout(function() {
+            $(".watchNav").fadeOut();
+        }, 2000);
+    })
+}
+
+function initVideo(videoId, username) {
+    startHideTimer();
+    setStartTime(videoId, username);
+    updateProgressTimer(videoId, username);
+}
+
+function updateProgressTimer(videoId, username) {
+    addDuration(videoId, username);
+
+    var timer;
+
+    $("video").on("playing", function(event) {
+        window.clearInterval(timer);
+        timer = window.setInterval(function() {
+            updateProgress(videoId, username, event.target.currentTime);
+        }, 3000);
+    })
+    .on("ended", function() {
+        setFinished(videoId, username);
+        window.clearInterval(timer);
+    })
+}
+
+function addDuration(videoId, username) {
+    $.post("ajax/addDuration.php", { videoId: videoId, username: username }, function(data) {
+        if(data !== null && data !== "") {
+            alert(data);
+        }
+    })
+}
+
+function updateProgress(videoId, username, progress) {
+    $.post("ajax/updateDuration.php", { videoId: videoId, username: username, progress: progress }, function(data) {
+        if(data !== null && data !== "") {
+            alert(data);
+        }
+    })
+}
+
+function setFinished(videoId, username) {
+    $.post("ajax/setFinished.php", { videoId: videoId, username: username }, function(data) {
+        if(data !== null && data !== "") {
+            alert(data);
+        }
+    })
+}
+
+function setStartTime(videoId, username) {
+    $.post("ajax/getProgress.php", { videoId: videoId, username: username }, function(data) {
+        if(isNaN(data)) {
+            alert(data);
+            return;
+        }
+
+        $("video").on("canplay", function() {
+            this.currentTime = data;
+            $("video").off("canplay");
+        })
+    })
+}
+console.log("working")
+function restartVideo() {
+    $("video")[0].currentTime = 0;
+    $("video")[0].play();
+    $(".upNext").fadeOut();
+}
+function watchVideo(videoID) {
+    window.location.href = `watch.php?id=${videoID}`;
+}
+
+function showUpNext() {
+    $(".upNext").fadeIn();
+}
+
+
 $(document).ready(function(){
-   
-    // sticky header anmation and height 
-    // function headerHeight(){
-    //     var height = $("#main-header").height();
-    //     $('.iq-height').css('height',height + 'px');
-    // }
-
-    // $(function(){
-    //     var header = $("#main-header"),
-    //     yOffset = 0,
-    //     triggerPoint = 80;
-    //     headerHeight();
-    //     $(window).resize(headerHeight);
-    //     $(window).in('scroll', function() {
-    //         yOffset = $(window).scrollTop();
-
-    //         if(yOffset >= triggerPoint){
-    //             header.addClass("menu-sticky animated slideDown");
-    //         } else {
-    //             header.removeClass("menu-sticky animated slideDown");
-    //         }
-    //     });
-    // });
-
-    // header menu dropdown 
-    // $('[data-toggle=more-toggle]').on('click', function () {
-    //     $(this).next().toggleClass('show');
-    // });
-
-    // $(document).on('click', function(e){
-    //     let myTargetElement = e.target;
-    //     let selector, mainElement;
-    //     if($(myTargetElement).hasClass('search-toggle') || $(myTargetElement).parent().hasClass('search-toggle') || $(myTargetElement).parent().parent().hasClass('search-toggle') ){
-    //         if($(myTargetElement).hasClass('search-toggle')) {
-    //             selector = $(myTargetElement).parent();
-    //             mainElement = $(myTargetElement);
-    //         } else if ($(myTargetElement).parent().hasClass('search-toggle')){
-    //             selector = $(myTargetElement).parent().parent();
-    //             mainElement = $(myTargetElement).parent();
-    //         }else if ($(myTargetElement).parent().parent().hasClass('search-toggle')){
-    //             selector = $(myTargetElement).parent().parent().parent();
-    //             mainElement = $(myTargetElement).parent().parent();
-    //         }
-    //         if(!mainElement.hasClass('active') && $('.navbar-list li').find('.active')){
-    //             $('.navbar-right li').removeClass('.iq-show');
-    //             $('.navbar-right li .search-toggle').removeClass('active');
-    //         }
-
-    //         selector.toggleClass('iq-show');
-    //         mainElement.toggleClass('active');
-    //         e.preventDefault();
-    //     } else if ($(myTargetElement).is('search-input')){} else {
-    //         $('.navbar-right li').removeClass('.iq-show');
-    //         $('.navbar-right li .search-toggle').removeClass('active');
-    //     }
-    // });
-    // $(document).on('click', function(event){
-    //     var $trigger = $(".main-header .navbar");
-    //     if($trigger !== event.target && !$trigger.has(event.target).length){
-    //         $(".main-header .navbar-collapse").collapse('hide');
-    //         $('body').removeClass('nav-open');
-    //     }
-    // });
-    // $('.c-toggler').on("click", function(){
-    //     $('body').addClass('nav-open');
-    // });
-
 
     $('#home-slider').slick({
         autoplay : false,
@@ -256,24 +287,6 @@ $(document).ready(function(){
         }
     });
 
-
-    $('.trending-content').each(function(){
-        var highestBox = 0;
-        $('.tab-pane', this).each(function(){
-            if($(this).height() > highestBox){
-                highestBox = $(this).height();
-            }
-        });
-        $('.tab-pane', this).height(highestBox);
-    });
-
-    if($('select').hasClass('season-select')){
-        $('select').select2({
-            theme : 'bootstrap4',
-            allowClear : false,
-            width : 'resolve'
-        });
-    }
 });
 
 

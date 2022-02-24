@@ -14,25 +14,19 @@ class EntityProvider {
     }
 
     public function getMovieEntities($limit=3,$cond){
-        return $this->filterEntities($limit,$cond,true,false);
+        $movies =  $this->filterEntities($limit,$cond,true,false);
+        return $movies;
         
     }
     public function getTvShowEntities($limit=3,$cond){
-        return filterEntities($limit,$cond,false,true);
+        $shows =  $this->filterEntities($limit,$cond,false,true);
+        return $shows;
 
     }
 
     private function getRandomEntities($limit,$movies,$tvshows,$cat) {
         $result = array();
-        $sql = "";
-        if($movies && $tvshows) {
-            $sql .= "SELECT entities.*,videos.* FROM entities INNER JOIN videos ON entities.id=videos.entityId";
-        }elseif($tvshows) {
-            $sql .= "SELECT entities.*,videos.* FROM entities INNER JOIN videos ON entities.id=videos.entityId where videos.isMovie=0";
-        }else{
-            $sql .= "SELECT entities.*,videos.* FROM entities INNER JOIN videos ON entities.id=videos.entityId where videos.isMovie=1";
-
-        }
+        $sql = "SELECT DISTINCT(videos.entityId) FROM entities INNER JOIN videos ON entities.id=videos.entityId";
         if($cat != null){
             $sql .= " where entities.categoryId = $cat";
         }
@@ -40,29 +34,29 @@ class EntityProvider {
         $query = $this->con->prepare($sql);
         $query->execute();
         while($row = $query->fetch(PDO::FETCH_ASSOC)){
-            $result[] = new Entity($this->con, $row);
+            $result[] = new Entity($this->con, $row["entityId"]);
         }
         return $result;
     }
     private function filterEntities($limit,$cond,$movies=true,$tvshows=true) {
         $result = array();
-        $sql = "";
+        $sql = "SELECT DISTINCT(videos.entityId) FROM entities INNER JOIN videos ON entities.id=videos.entityId";
         if($movies && $tvshows) {
-            $sql .= "SELECT entities.*,videos.* FROM entities INNER JOIN videos ON entities.id=videos.entityId";
+            $sql .= $sql;
         }elseif($tvshows) {
-            $sql .= "SELECT entities.*,videos.* FROM entities INNER JOIN videos ON entities.id=videos.entityId where videos.isMovie=0";
+            $sql .= " where videos.isMovie=0";
         }else{
-            $sql .= "SELECT entities.*,videos.* FROM entities INNER JOIN videos ON entities.id=videos.entityId where videos.isMovie=1";
+            $sql .= " where videos.isMovie=1";
         }
         if($cond != null){
-            $sql .= " $cond " ;
+            $sql .= " $cond" ;
         }
-        $sql .= " LIMIT $limit";
+        $sql .= "  LIMIT $limit";
        
         $query = $this->con->prepare($sql);
         $query->execute();
         while($row = $query->fetch(PDO::FETCH_ASSOC)){
-            $result[] = new Entity($this->con, $row);
+            $result[] = new Entity($this->con, $row["entityId"]);
         }
         return $result;
     }

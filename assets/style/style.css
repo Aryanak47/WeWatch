@@ -38,7 +38,7 @@ header{
     padding: 10px 16px;
 
 }
-nav{
+/* nav{
     margin: 0 auto;
     font-weight: 400;
 }
@@ -51,46 +51,84 @@ nav{
 
 .logo > img{
     width: 100%;
-}
-.nav__lists{
+} */
+
+
+
+
+
+
+
+
+
+.topBar {
+    position: fixed;
+    width: 100%;
+    z-index: 10;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    padding: 0 60px;
+    height: 70px;
+    box-sizing: border-box;
+    min-width: 1050px;
+    transition: background-color 200ms linear;
 }
 
-.nav__list{
+.topBar.scrolled {
+    background-color: #141414;
+    transition: background-color 200ms linear;
+}
+
+.logoContainer {
+    height: 40px;
+}
+
+.logoContainer img {
+    height: 100%;
+}
+
+.navLinks {
+    display: flex;
     list-style: none;
-    margin-left: 14px;
 }
-a{
-    text-decoration: none;
-}
-.nav__link:link, .nav__link:visited {
-    color:var(--primary-color);
-    text-transform: uppercase;
-    display: block;
+
+
+.navLinks a {
+    color: #fff;
+    font-size: 18px;
+    margin-left: 20px;
     transition: all .2s;
+   
+}
+
+.rightItems {
+    text-align: right;
+    flex: 1;
+}
+
+.rightItems i {
+    color: #fff;
+    font-size: 20px;
+    margin-left: 10px;
 }
 
 
-.nav__link:hover, .nav__link:active {
-    border-bottom: 1px solid #fff;
-    transform: translateY(-3px);
- } 
 
-.nav__left .icon-user{
-    margin-right: 5px;
 
-}
-.icon{
-    height: 16px; 
-    width: 16px; 
-}
-.icon:hover{
-    cursor: pointer;
-}
-.nav__left .icon{
-    fill: #fff;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* sign up page */
 .register__main{
     height:100vh;
@@ -253,7 +291,7 @@ buttons button i {
     left: 80px;
 }
 #home-slider h1.slider-text{
-    font-size: 50px;
+    font-size: 30px;
     margin: 15px 0;
 }
 #home-slider p{
@@ -1241,6 +1279,7 @@ background: rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
     width: 230px;
+    position: relative;
 }
 
 .episodeContainer img {
@@ -1267,11 +1306,64 @@ background: rgba(0, 0, 0, 0.8);
 
 
 
+/* Movie Page */
 
+.watchContainer video {
+    width: 100%;
+}
 
+.videoControls {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0,0,0,0.3);
+}
 
+.videoControls h1 {
+    color: #fff;
+}
 
+.videoControls button {
+    font-size: 50px;
+    padding: 50px;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+}
+.upNext {
+    height: 100%;
+    justify-content: center;
+}
 
+.upNextContainer button {
+    padding: 0;
+}
+
+.upNextContainer h2,
+.upNextContainer h3 {
+    color: #fff;
+}
+
+.watchNav {
+    z-index: 2;
+}
+
+.seen {
+    color: var(--primary-color);
+    font-size: 26px;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+/* Recent page */
+.recent-movie{
+    margin-top: 70px;
+    position: absolute;
+    width: 100%;
+}
 
 
 /* ***************** footer **************** */

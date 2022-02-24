@@ -7,6 +7,7 @@
     $newEntities =   $entityProvider->getMovieEntities(7,$sortByNew);
     $trendingEntities = $entityProvider->getMovieEntities(5,$sortByViews);
     $category = new Category($conn,$userLoggedIn);
+
 ?>
   
     <section id="home" class="iq-main-slider p-0">
@@ -53,7 +54,7 @@
                   </div>
                   <div class="d-flex align-items-center  mt-4" data-animation-in="fadeInUp" data-delay-in="1.2">
                     <div class='buttons'>
-                        <button><i class='fas fa-play'></i> Play</button>
+                        <a href="entity.php?id=<?= $entity->getId() ?>" class="btn"><button><i class='fas fa-play' ></i> Play</button> </a>
                         <button onclick='volumeToggle(this)'><i class='fas fa-volume-mute'></i></button>
                     </div>
                   </div>
@@ -195,7 +196,7 @@
                   <?= $newEntity->getDescription() ?>
                 </p>
                 <div class="parallax-buttons">
-                  <a href="#" class="btn btn-hover">Play Now</a>
+                  <a href="entity.php?id=<?= $newEntity->getId() ?>" class="btn btn-hover">Play Now</a>
                 </div>
               </div>
             </div>
@@ -260,3 +261,4 @@
     </footer>
     
   </body>
+</html>

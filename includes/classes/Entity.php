@@ -1,7 +1,7 @@
 <?php
 class Entity {
 
-    private $con, $sqlData;
+    private $con, $sqlData,$video;
 
     public function __construct($con, $input) {
         $this->con = $con;
@@ -15,6 +15,8 @@ class Entity {
             $query->execute();
             $this->sqlData = $query->fetch(PDO::FETCH_ASSOC);
         }
+        
+
     }
 
     public function getId() {
