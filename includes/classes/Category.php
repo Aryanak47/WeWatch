@@ -54,6 +54,7 @@
            if(empty($entities)){
                return "";
            }
+           $SITE_URL = "http://127.0.0.1:80/wewatch";
            
             $html = "
             <section id='iq-upcoming-movie'>
@@ -70,6 +71,15 @@
                         $name =  $entity->getName();
                         $min = explode(':',$entity->getDuration())[0];
                         $id = $entity->getId();
+                        $username = $this->username;
+                        $urlEncoded = urlencode($name);
+                        $query = $this->conn->prepare("SELECT * FROM wishlist WHERE user=:username AND entityId=:entity");
+                        $query->bindParam(":entity",$id);
+                        $query->bindParam(":username",$username);
+                        $query->execute();
+                        $wishlist = $query->rowCount() > 0;
+                        $active =  $wishlist ? 'wish-active' : '';
+                        $info = $username." ".$id;
                         $html .= "<li class='slide-item'>
                         <div class='block-images position-relative'>
                           <div class='img-box'>
@@ -96,14 +106,17 @@
                                 <span><i class='fa fa-share-alt'></i></span>
                                 <div class='share-box'>
                                   <div class='d-flex align-items-center'>
-                                    <a href='#' class='share-ico'><i class='fa fa-share-alt'></i></a>
-                                    <a href='#' class='share-ico'><i class='fa fa-youtube'></i></a>
-                                    <a href='#' class='share-ico'><i class='fa fa-instagram'></i></a>
+                                  
+                                  <a target='_blank' href='https://facebook.com/share.php?u=$SITE_URL/entity.php?id=$id' class='share-ico'><i class='fa fa-facebook'></i></a>
+                                  <a target='_blank' href='https://twitter.com/share?text=$urlEncoded&url=$SITE_URL/entity.php?id=$id' class='share-ico'><i class='fa fa-twitter'></i></a>
+                                  <a target='_blank' href='https://api.whatsapp.com/send?text=$urlEncoded $SITE_URL/entity.php?id=$id' class='share-ico'><i class='fa fa-whatsapp'></i></a>
                                   </div>
                                 </div>
                               </li>
                               <li>
-                                <span><i class='fa fa-heart'></i></span>
+                              <span class='wish_list $active' data-info='$info'><i class='fa fa-heart'></i></span>
+                            </li>
+                          
                               </li>
                             </ul>
                         </div>

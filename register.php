@@ -1,8 +1,5 @@
 <?php
-    require_once('includes/config.php');
-    require_once('includes/classes/FormSanitizer.php');
-    require_once('includes/classes/Constant.php');
-    require_once('includes/classes/Account.php');
+    require_once("includes/header.php"); 
     $account = new Account($conn);
     if(isset($_POST['submitBtn'])){
 
@@ -25,51 +22,7 @@
             echo $_POST[$name];
         }
     }
-
-
-
-
-
-
-
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="assets/style/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <header id="header">
-        <div class="logo">
-            <img src="assets/images/websitelogo.png" alt="logo" class="logo__image">
-        </div>
-        <nav class="nav">
-            <ul class="nav__lists">
-                <li class="nav__list"><a href="http://" class="nav__link active">Home</a></li>
-                <li class="nav__list"><a href="http://" class="nav__link">TV shows</a></li>
-                <li class="nav__list"><a href="http://" class="nav__link">Movies</a></li>
-                <li class="nav__list"><a href="http://" class="nav__link">Recently Added</a></li>
-            </ul>
-        </nav>
-        <div class="nav__left">
-           <span class="nav__left-item">
-               <svg class="icon icon-user"><use xlink:href="assets/images/sprite.svg#icon-user"></use></svg>
-           </span>
-           <span class="nav__left-item">
-               <svg class="icon icon-search"><use xlink:href="assets/images/sprite.svg#icon-search"></use></svg>
-           </span>
-        </div>
-
-    </header>
     <main class="register__main">
         <div class="form__section">
             <form class="form" method="post">
@@ -132,6 +85,9 @@
             </form>
         </div>
     </main>
-
+    <script>
+        $(".topBar").addClass("scrolled")
+      
+    </script>
 </body>
 </html>

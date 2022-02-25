@@ -56,14 +56,22 @@
                                             <span><i class='fa fa-share-alt'></i></span>
                                             <div class='share-box'>
                                             <div class='d-flex align-items-center'>
-                                                <a href='#' class='share-ico'><i class='fa fa-share-alt'></i></a>
-                                                <a href='#' class='share-ico'><i class='fa fa-youtube'></i></a>
-                                                <a href='#' class='share-ico'><i class='fa fa-instagram'></i></a>
+                                                <a target="_blank" href="https://facebook.com/share.php?u=<?php echo $SITE_URL."/entity.php?id=".$id ?>" class="share-ico"><i class="fa fa-facebook"></i></a>
+                                                <a target="_blank" href="https://twitter.com/share?text=<?= $name  ?> &url=<?php echo $SITE_URL."/entity.php?id=".$id ?>" class="share-ico"><i class="fa fa-twitter"></i></a>
+                                                <a target="_blank" href="https://api.whatsapp.com/send?text=<?= urlencode($name) ?> <?php echo $SITE_URL."/entity.php?id=".$id ?>" class="share-ico"><i class="fa fa-whatsapp"></i></a>
                                             </div>
                                             </div>
                                         </li>
                                         <li>
-                                            <span><i class='fa fa-heart'></i></span>
+                                            <?php 
+                                                $query = $conn->prepare("SELECT * FROM wishlist WHERE user=:username AND entityId=:entity");
+                                                $query->bindParam(":entity",$id);
+                                                $query->bindParam(":username",$userLoggedIn);
+                                                $query->execute();
+                                                $wishlist = $query->rowCount() > 0;
+                                            
+                                            ?>
+                                            <span class="wish_list <?php echo $wishlist ? 'wish-active' : ''?>" data-info="<?php echo $userLoggedIn." ".$id;   ?>"><i class="fa fa-heart"></i></span>
                                         </li>
                                         </ul>
                                     </div>

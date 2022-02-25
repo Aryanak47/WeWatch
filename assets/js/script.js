@@ -13,7 +13,6 @@ function volumeToggle(button) {
 }
 
 function previewEnded() {
-    console.log("Preview ended")
     $(".previewVideo").toggle();
     $(".previewImage").prop("hidden",false);
 }
@@ -96,7 +95,6 @@ function setStartTime(videoId, username) {
         })
     })
 }
-console.log("working")
 function restartVideo() {
     $("video")[0].currentTime = 0;
     $("video")[0].play();
@@ -112,6 +110,21 @@ function showUpNext() {
 
 
 $(document).ready(function(){
+    $(".wish_list").click(function(event){
+        let element = event.target
+        let info = $(element).data("info").split(" ")
+        let user = info[0]
+        let video = parseInt(info[1]) 
+        console.log(info);
+        $.post("ajax/manageWishlist.php", { entity: video, user: user }, function(data) {
+            if(isNaN(data)) {
+                alert(data);
+                return;
+            }
+            $(element).toggleClass("wish-active")
+        })
+        
+    })
 
     $('#home-slider').slick({
         autoplay : false,

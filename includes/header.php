@@ -1,5 +1,8 @@
 <?php
 require_once("includes/config.php");
+require_once('includes/classes/FormSanitizer.php');
+require_once('includes/classes/Constant.php');
+require_once('includes/classes/Account.php');
 require_once("includes/classes/EntityProvider.php");
 require_once("includes/classes/Entity.php");
 require_once("includes/classes/Category.php");
@@ -9,15 +12,42 @@ require_once("includes/classes/Season.php");
 require_once("includes/classes/ErrorMessage.php");
 require_once("includes/classes/VideoProvider.php");
 
-if(!isset($_SESSION["userLoggedIn"])) {
-    header("Location: register.php");
-}
+ $script_name = $_SERVER['SCRIPT_NAME'];
+ $script_name = explode('/', $script_name);
+ $mypage = $script_name[count($script_name)-1];
+ if($mypage == "login.php" || $mypage == "register.php"){
 
-$userLoggedIn = $_SESSION["userLoggedIn"];
+}else{
+    if(!isset($_SESSION["userLoggedIn"])) {
+        header("location:login.php");
+    }else{
+        $userLoggedIn = $_SESSION["userLoggedIn"];
+    }
+}
+ $og_name = "We Watch";
+ $og_image = "";
+ $og_url = $SITE_URL;
+ if($mypage =="entity.php"){
+     $myPageId = FormSanitizer::getSafeValue($_GET['id']);
+     $query = $conn->prepare("SELECT * FROM entities where id =:id ");
+     $query->bindValue(':id',$myPageId);
+     $query->execute();
+     $videoInfo = $query->fetch(PDO::FETCH_ASSOC);
+     $og_name = $videoInfo['name'];
+     $og_image = $videoInfo['thumbnail'];
+     $og_url = $SITE_URL."/entity.php?id=$myPageId";
+ }
+ 
+
 ?>
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width">
+        <meta property="og:title" content="<?php echo $og_name ?>" />
+        <meta property="og:image" content="<?php echo $og_image ?>" />
+        <meta property="og:url" content="<?php echo $og_url ?>" />
+        <meta property="og:site_name" content="<?php echo $SITE_URL."/"; ?>" />
         <title>Welcome to WeWatch</title>
         <!-- custom csss -->
         <link rel="stylesheet" type="text/css" href="assets/style/style.css" />

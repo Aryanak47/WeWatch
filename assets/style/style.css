@@ -137,10 +137,11 @@ header{
     background-blend-mode: screen;
 }
 .form__section{
-    display:flex;
-    align-items: center;
-    justify-content:center;
-     position: relative;
+    left: 50%;
+    position: absolute;
+    top: 25%;
+    transform: translate(-50%, -17%)
+  
 }
 .form{
     background-color: #fff;
@@ -150,6 +151,9 @@ header{
     margin-top:20px;
 
 
+}
+.form__section .logo img{
+    width:30px;
 }
 .form__text{
     font-weight: 400;
@@ -161,12 +165,17 @@ header{
     min-width: 300px;
     margin-bottom:12px;
 }
+
 .input__container input{
     width: 100%;
     outline: none;
     border: none;
-    padding:10px 5px;
+    padding:3px 5px;
     border-bottom:1px solid #777;
+
+}
+.login .input__container input{
+    padding:10px 5px;
 
 }
 .input__container  label {
@@ -716,7 +725,17 @@ li.slide-item:hover .block-images{
     text-align: center !important;
 }
 
-.music-play-lists li:hover span{
+.music-play-lists li:hover  span:not(:last-child){
+    background:  var(--primary-color);
+    color: #fff;
+    transition: all 0.45s ease 0s;
+
+}
+
+.wish_list i {
+    pointer-events: none;
+}
+.wish_list.wish-active {
     background:  var(--primary-color);
     color: #fff;
     transition: all 0.45s ease 0s;
@@ -964,7 +983,6 @@ h1,h2,h3,h4,h5{
     font-weight: 500;
     margin: 0;
     line-height: 1.2;
-    color: #fff;
 }
 
 h1 a, h2 a, h3 a , h4 a, h5 a, h6 a{

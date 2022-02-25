@@ -9,7 +9,8 @@
         public static $usernameTakenError = "This username is already taken!!";
         public static $passwordError = "Password Must be between at 8 and 25 Characters!";
         public static $passwordMatchError = "Password is not matching!";
-        public static $loginError = "username/email or password is not matching!";
+        public static $loginError = "username or password is not matching!";
+        public static $banError = "You have been banned for some reason!";
     }
 
 

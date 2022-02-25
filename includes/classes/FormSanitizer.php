@@ -8,6 +8,11 @@
             $input = ucfirst($input);
             return $input;
         }
+        public static function  getSafeValue($input){
+            $input = strip_tags($input);
+            $input = trim($input);
+            return $input;
+        }
         public static function  sanitizeUsername($input){
             $input = strip_tags($input);
             $input = trim($input);

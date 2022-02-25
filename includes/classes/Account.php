@@ -15,12 +15,17 @@
             $query->execute();
             $data = $query->fetch(PDO::FETCH_ASSOC);
             if ($query->rowCount() > 0 ){
+                if($data['ban']){
+                    array_push($this->err,Constant::$banError);
+                    return false;
+                }
                 $_SESSION['role']=$data['role'];
                 return true;
             }
             array_push($this->err,Constant::$loginError);
             return false;
         }
+      
 
 
         public function register($em,$em2,$user,$fName,$lName,$pw,$pw2) {
