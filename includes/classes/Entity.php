@@ -20,7 +20,10 @@ class Entity {
     }
 
     public function getId() {
-        return $this->sqlData["entityId"];
+        if(!empty($this->sqlData["entityId"])){
+            return $this->sqlData["entityId"];
+        }
+        return $this->sqlData["id"];
     }
 
     public function getName() {

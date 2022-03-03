@@ -109,13 +109,15 @@ function showUpNext() {
 }
 
 
+
+
 $(document).ready(function(){
+    
     $(".wish_list").click(function(event){
         let element = event.target
         let info = $(element).data("info").split(" ")
         let user = info[0]
         let video = parseInt(info[1]) 
-        console.log(info);
         $.post("ajax/manageWishlist.php", { entity: video, user: user }, function(data) {
             if(isNaN(data)) {
                 alert(data);
@@ -125,6 +127,7 @@ $(document).ready(function(){
         })
         
     })
+  
 
     $('#home-slider').slick({
         autoplay : false,
