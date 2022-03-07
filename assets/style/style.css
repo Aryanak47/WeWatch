@@ -1434,6 +1434,16 @@ background: rgba(0, 0, 0, 0.8);
     border-radius: 8px;
     font-size: 20px;
 }
+.loader{
+    width: 600px;
+    height: 300px;
+    position: fixed;
+    z-index: 1;
+    top: 25%;
+}
+.loader img{
+    width: 100%;
+}
 
 /* ***************** footer **************** */
 .footer-top{
