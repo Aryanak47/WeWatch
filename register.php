@@ -68,7 +68,7 @@
                
                 </div>
                 <div class="input__container">
-                    <input type="password" id="pw" class="password" placeholder="Password" name="password" required min="8">
+                    <input type="text" id="pw" class="password" placeholder="Password"  name="password" required min="8">
                     <label for="pw">Password</label>
                        <?php
                         echo  '<div class="error">'.$account->getErrorMessage(Constant::$passwordMatchError)."</div>";

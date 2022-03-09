@@ -20,7 +20,7 @@
             $error = "<script>
             swal({
             title: 'Failed!',
-            text: 'Movie with this name already exits.',
+            text: 'Movie/Tv show already exits with this name.',
             icon: 'warning',
             button: 'Ok',
                 });

@@ -43,11 +43,12 @@
                     <label for="username">username</label>
                 </div>
                 <div class="input__container">
-                    <input type="password" id="pw" class="password" placeholder="Password" name="password" required min="8">
+                    <input type="password" id="pw" class="password" placeholder="Password"  name="password" required min="8">
                     <label for="pw">Password</label>
                 </div>
                 <input type="submit" class="submit-btn" value="Submit" name="submitBtn">
                 <a href="register.php" class="login__link">Have no account ? sign up here !</a>
+                <a href="forgot-password.php" class="login__link">Forgot Password ? click here !</a>
 
             </form>
         </div>
