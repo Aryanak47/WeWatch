@@ -38,6 +38,12 @@ require_once("includes/classes/User.php");
      $og_image = $videoInfo['thumbnail'];
      $og_url = $SITE_URL."/entity.php?id=$myPageId";
  }
+    $wish = $conn->prepare("SELECT * FROM wishlist 
+    WHERE user=:username");
+    $wish->bindValue(":username", $userLoggedIn);
+    $wish->execute();
+    $total_wish = $wish->rowCount();
+    $total_wish = $total_wish > 5 ? "5+":$total_wish;
  
 
 ?>

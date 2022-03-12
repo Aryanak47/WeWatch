@@ -16,7 +16,7 @@
 <div class="rightItems">
     <a href="wishlist.php" class="wish">
     <i class="fa fa-heart" aria-hidden="true"></i>
-    <span class="wish__num">5+</span>
+    <span class="wish__num"> <?= $total_wish ?></span>
     </a>
     <a href="search.php">
         <i class="fas fa-search"></i>

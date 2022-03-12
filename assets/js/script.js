@@ -123,7 +123,11 @@ $(document).ready(function(){
                 alert(data);
                 return;
             }
+            let total = parseInt(data)
             $(element).toggleClass("wish-active")
+             total = total > 5 ? `5+` : total
+            $(".wish__num").text(total);
+            
         })
         
     })

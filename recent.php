@@ -2,7 +2,7 @@
     require_once("includes/header.php");
 
 ?>
-       <section id='iq-upcoming-movie' class='recent-movie'>
+       <section class='recent-movie'>
             <div class='container-fluid'>
               <div class='row'>
                 <div class='col-sm-12 overflow-hidden'>
