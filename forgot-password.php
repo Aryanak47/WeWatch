@@ -42,12 +42,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <title>Forgot Password</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/style/style.css">
+    <script src="https://kit.fontawesome.com/06a651c8da.js" crossorigin="anonymous"></script>
+
+
 </head>
 <body>
+<?php
+     include_once("includes/navbar.php")
+    ?>
     <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4 form">

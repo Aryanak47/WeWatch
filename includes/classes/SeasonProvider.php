@@ -51,7 +51,7 @@ class SeasonProvider {
                             <img src='$thumbnail'>
 
                             <div class='videoInfo'>
-                                <h4>$episodeNumber. $name</h4>
+                                <h4>$name</h4>
                                 <span>$description</span>
                             </div>
                             $hasSeen
@@ -59,6 +59,8 @@ class SeasonProvider {
                         </div>
                     </div>
                 </a>";
+
+        
     }
 }
 ?>

@@ -6,6 +6,26 @@
         public function __construct($con) {
             $this->con = $con;
         }
+        public function updateDetails($fn, $ln, $em, $un) {
+            $this->validFirstName($fn);
+            $this->validLastName($ln);
+            $this->validateNewEmail($em, $un);
+    
+            if(empty($this->err)) {
+                $query = $this->con->prepare("UPDATE users SET firstName=:fn, lastName=:ln, email=:em
+                                                WHERE username=:un");
+                $query->bindValue(":fn", $fn);
+                $query->bindValue(":ln", $ln);
+                $query->bindValue(":em", $em);
+                $query->bindValue(":un", $un);
+    
+                return $query->execute();
+            }
+    
+            return false;
+        }
+
+
         public function login($uemail, $password){
             $found = false;
             $hashedPassword = hash('sha512',$password);
@@ -80,9 +100,27 @@
             
             
         }
+        
+    private function validateNewEmail($em, $un) {
+
+        if(!filter_var($em, FILTER_VALIDATE_EMAIL)) {
+            array_push($this->err, Constants::$emailError);
+            return;
+        }
+
+        $query = $this->con->prepare("SELECT * FROM users WHERE email=:em AND username != :un");
+        $query->bindValue(":em", $em);
+        $query->bindValue(":un", $un);
+
+        $query->execute();
+        
+        if($query->rowCount() != 0) {
+            array_push($this->err, Constant::$emailTakenError);
+        }
+    }
         public function validUsername($fn){
             if(strlen($fn)  < 2 || strlen($fn) > 25){
-                array_push($this->err,Constant::$emailError);
+                array_push($this->err,Constant::$usernameError);
                 return;
             } 
             $query = $this->con->prepare( "SELECT * FROM users WHERE username=:un" );
@@ -109,6 +147,40 @@
                 return $error;
             }
 
+        }
+        public function getFirstError() {
+            if(!empty($this->err)) {
+                return $this->err[0];
+            }
+        }
+        public function updatePassword($oldPw, $pw, $pw2, $un) {
+            $this->validateOldPassword($oldPw, $un);
+            $this->validPassword($pw, $pw2);
+    
+            if(empty($this->err)) {
+                $query = $this->con->prepare("UPDATE users SET password=:pw WHERE username=:un");
+                $pw = hash("sha512", $pw);
+                $query->bindValue(":pw", $pw);
+                $query->bindValue(":un", $un);
+    
+                return $query->execute();
+            }
+    
+            return false;
+        }
+    
+        public function validateOldPassword($oldPw, $un) {
+            $pw = hash("sha512", $oldPw);
+    
+            $query = $this->con->prepare("SELECT * FROM users WHERE username=:un AND password=:pw");
+            $query->bindValue(":un", $un);
+            $query->bindValue(":pw", $pw);
+    
+            $query->execute();
+    
+            if($query->rowCount() == 0) {
+                array_push($this->err, Constant::$passwordIncorrect);
+            }
         }
     }
 

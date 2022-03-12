@@ -92,6 +92,28 @@ header{
     margin-left: 10px;
 }
 
+.wish{
+    position: relative;
+}
+.wish__num{
+    padding: 3px;
+    position: absolute;
+    top: -88%;
+    left: 63%;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 400;
+    background: var(--primary-color);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    /* text-align: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
 
 /* sign up page */
 .register__main{
@@ -181,6 +203,8 @@ input:focus::placeholder {
 .error{
     color: orangered;
     font-size: 14px;
+    font-weight: 400;
+    text-align: center;
 }
 
 .previewImage,
@@ -215,7 +239,13 @@ buttons button i {
     background-color: #e6e6e6;
     color: #000;
 }
-
+ 
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 
 
@@ -1222,6 +1252,7 @@ background: rgba(0, 0, 0, 0.8);
 }
 .parallax-heading{
     font-size: 52px;
+    color:#fff;
 }
 
 /* *********** responsiveness ********** */
@@ -1252,7 +1283,15 @@ background: rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
     padding: 10px 50px;
-    margin: 20px 0px;
+    /* margin: 20px 0px; */
+}
+.videos{
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+.videos::-webkit-scrollbar{
+    width:0
 }
 
 .episodeContainer {
@@ -1411,6 +1450,66 @@ background: rgba(0, 0, 0, 0.8);
 }
 .loader img{
     width: 100%;
+}
+
+/* Profile page */
+
+.settingsContainer {
+    padding-top: 60px;
+    background-color: transparent;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.settingsContainer h2 {
+    color: #fff;
+    margin-top: 0;
+}
+
+.settingsContainer .formSection {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 20px;
+}
+
+.settingsContainer form input[type="text"],
+.settingsContainer form input[type="email"],
+.settingsContainer form input[type="password"] {
+    width: 300px;
+    height: 40px;
+    font-size: 15px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 3px;
+    padding: 0 5px;
+}
+
+.settingsContainer form input[type="submit"] {
+    background-color: var(--primary-color);
+    width: 100px;
+    height: 40px;
+}
+
+.alertSuccess,
+.alertError {
+    margin: 10px 0;
+}
+
+.alertError {
+    color: #dc1928;
+}
+
+.alertSuccess {
+    color: #2ecc71;
+}
+
+.formSection h3 {
+    padding: 0;
+    color: #fff;
+    font-size: 20px;
 }
 
 /* ***************** footer **************** */

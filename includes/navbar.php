@@ -14,17 +14,25 @@
 </ul>
 
 <div class="rightItems">
+    <a href="wishlist.php" class="wish">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+    <span class="wish__num">5+</span>
+    </a>
     <a href="search.php">
         <i class="fas fa-search"></i>
     </a>
-
-    <a href="profile.php">
+    <?php if (isset($_SESSION["userLoggedIn"])){  ?>
+        <a href="profile.php">
         <i class="fas fa-user"></i>
     </a>
 
     <a href="logout.php">
         <i class="fas fa-sign-out-alt"></i>
     </a>
+    
+    
+    <?php } ?>
+    
 </div>
 
 </div>

@@ -47,7 +47,7 @@
         function load_details(title){
             $.ajax({
                 type: 'GET',
-                url:`https://api.themoviedb.org/3/search/movie?api_key=YOUR_API_KEY&query=${title}`,
+                url:`https://api.themoviedb.org/3/search/movie?api_key=da65565c4f946371b1aa947018514022&query=${title}`,
 
                 success: function(movie){
                 if(movie.results.length<1){
@@ -85,7 +85,7 @@
         function getHtmlContainer(title,id,thumbnail){
             var poster = `https://image.tmdb.org/t/p/original${thumbnail}`;
             let html = `
-                        <a href="apimovie.php?id=1">
+                        <a href="apimovie.php?id=${id}">
                             <div class="previewContainer small">
                                 <img src="${poster}" title="${title}" alt="${title}" />
                             </div>
