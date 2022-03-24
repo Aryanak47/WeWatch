@@ -1,9 +1,10 @@
 <?php
     require_once("includes/header.php");
-    $query = $conn->query("SELECT * FROM wishlist where user = $userLoggedIn ORDER BY createdAt desc");
+    $query = $conn->prepare("SELECT * FROM wishlist where user = '$userLoggedIn' ORDER BY createdAt desc");
     $query->execute();
     $datas = $query->fetchAll();
     $entities = array();
+   
     foreach ($datas as $data){
         $entities[] =new Entity($conn, $data["entityId"]);
     }

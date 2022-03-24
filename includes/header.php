@@ -16,6 +16,7 @@ require_once("includes/classes/User.php");
  $script_name = $_SERVER['SCRIPT_NAME'];
  $script_name = explode('/', $script_name);
  $mypage = $script_name[count($script_name)-1];
+ $total_wish = 0;
  if($mypage == "login.php" || $mypage == "register.php"){
 
 }else{
@@ -23,6 +24,12 @@ require_once("includes/classes/User.php");
         header("location:login.php");
     }else{
         $userLoggedIn = $_SESSION["userLoggedIn"];
+        $wish = $conn->prepare("SELECT * FROM wishlist 
+        WHERE user=:username");
+        $wish->bindValue(":username", $userLoggedIn);
+        $wish->execute();
+        $total_wish = $wish->rowCount();
+        $total_wish = $total_wish > 5 ? "5+":$total_wish;
     }
 }
  $og_name = "We Watch";
@@ -38,12 +45,7 @@ require_once("includes/classes/User.php");
      $og_image = $videoInfo['thumbnail'];
      $og_url = $SITE_URL."/entity.php?id=$myPageId";
  }
-    $wish = $conn->prepare("SELECT * FROM wishlist 
-    WHERE user=:username");
-    $wish->bindValue(":username", $userLoggedIn);
-    $wish->execute();
-    $total_wish = $wish->rowCount();
-    $total_wish = $total_wish > 5 ? "5+":$total_wish;
+   
  
 
 ?>
