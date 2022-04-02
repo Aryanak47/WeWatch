@@ -108,6 +108,55 @@ function showUpNext() {
     $(".upNext").fadeIn();
 }
 
+function getRecommendations(movieName) {
+    $(".loader").fadeIn();
+    $.ajax({
+        type: 'GET',
+        contentType: "application/json",
+        url:`http://127.0.0.1:8000/predict`,
+        data: {title: movieName},
+
+        success: function(movies){
+            let html = `<div class="previewCategories noScroll">
+                            <div class="category">
+                                <div class="entities">`
+            if(!movies[0]){
+                $(".recommendation-section").html("");
+                return
+            }
+            movies.forEach(m => {
+                let title = m.title
+                let thumbnail = m.poster_path
+                let id = m.id
+                if(title && thumbnail &&id){
+                    html += getHtmlContainer(title,id,thumbnail)
+                }
+
+                })
+            html += ` </div></div> </div>`
+            $(".loader").delay(300).fadeOut();
+            $(".results").html(html);
+       
+        },
+        error: function(){
+        alert('Invalid Request');
+        },
+    });
+}
+
+function getHtmlContainer(title,id,thumbnail){
+    var poster = `https://image.tmdb.org/t/p/original${thumbnail}`;
+    let html = `
+                <a href="apimovie.php?id=${id}">
+                    <div class="previewContainer small">
+                        <img src="${poster}" title="${title}" alt="${title}" />
+                    </div>
+                </a>
+          `
+    return html;
+
+}
+
 
 
 
@@ -131,6 +180,7 @@ $(document).ready(function(){
         })
         
     })
+
   
 
     $('#home-slider').slick({

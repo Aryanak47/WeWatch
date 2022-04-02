@@ -84,5 +84,16 @@
         setcookie('Recently_Watched', serialize($recent), time()+60*60*24*365);
       }
         ?>
+        <div class="recommendation-section">
+          <h2 class="d-flex justify-content-center m-4 display-4 font-weight-bold">Recommended For You</h2>
+          <div class="loader" style="display: none; position:unset !important">
+            <img src="assets/images/load.gif" alt="loader" />
+          </div>
+        </div>
+        <div class="results"></div>
+        <script>
+          let title = "<?php echo $entity->getName(); ?>"
+           getRecommendations(title);
+        </script>
   </body>
 </html>

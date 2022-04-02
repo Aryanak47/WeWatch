@@ -5,26 +5,31 @@
         exit();
     }
 ?>
-    <div class="result">
-
-
     
+    <div class="movie-info">
     </div>
-    </body>
+    <div class="recommendation-section">
+        <h2 class="d-flex justify-content-center m-4 display-4 font-weight-bold">Recommended For You</h2>
+        <div class="loader" style="display: none; position:unset !important">
+            <img src="assets/images/load.gif" alt="loader" />
+        </div>
+    </div>
+    <div class="results"></div>
     <script>
         $(document).ready(function() {
             getInformation()
         })
+
         function getInformation(){
             let id = '<?php echo $_GET['id']; ?>';
-            console.log("id" ,id);
             $.ajax({
                 type: 'GET',
                 url:`https://api.themoviedb.org/3/movie/${id}?api_key=da65565c4f946371b1aa947018514022`,
 
                 success: function(movie_details){
                     let html = show_details(movie_details,id);
-                    $(".result").html(html);
+
+                    $(".movie-info").html(html);
                 
                 },
                 error: function(){
@@ -34,11 +39,11 @@
             });
         }
         function show_details(movie_details,id){
-            console.log(movie_details);
             var imdb_id = movie_details.imdb_id;
             var poster = 'https://image.tmdb.org/t/p/original'+movie_details.poster_path;
             var overview = movie_details.overview;
             var movie_title = movie_details.original_title
+            getRecommendations(movie_title)
             var genres = movie_details.genres;
             var rating = movie_details.vote_average;
             var vote_count = movie_details.vote_count;
@@ -76,7 +81,6 @@
         }
         function createHtmlContainer(details){
             let {poster,genres,overview,runtime,status,title} = details
-            console.log(poster,genres,overview,runtime,status,title);
             let html = `<div id="home-slider">
                         <div class="slide slick-bg">
                         <div class="trailer">
@@ -131,4 +135,6 @@
             return html;
         }
     </script>
+    </body>
+   
 </html>

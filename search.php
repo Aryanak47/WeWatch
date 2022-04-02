@@ -27,7 +27,6 @@
                 $.post("ajax/getSearchResult.php", { text: value, username: user }, function(data) {
                     if(data == 0) {
                         $(".results").html("");
-                        console.log("calling api")
                         load_details(value)
                         return
 
@@ -39,11 +38,9 @@
             else {
                 $(".results").html("");
             }
-                
-            
-
             },2000)
         })
+        
         function load_details(title){
             $.ajax({
                 type: 'GET',
@@ -81,18 +78,6 @@
                 $(".loader").delay(300).fadeOut();
                 },
             });
-        }
-        function getHtmlContainer(title,id,thumbnail){
-            var poster = `https://image.tmdb.org/t/p/original${thumbnail}`;
-            let html = `
-                        <a href="apimovie.php?id=${id}">
-                            <div class="previewContainer small">
-                                <img src="${poster}" title="${title}" alt="${title}" />
-                            </div>
-                        </a>
-                  `
-            return html;
-
         }
     })
     
