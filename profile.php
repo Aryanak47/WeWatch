@@ -1,7 +1,13 @@
 <?php
 require_once("includes/header.php");
+require_once("includes/paypalConfig.php");
+require_once("includes/classes/BillingDetail.php");
+
+$user = new User($conn, $userLoggedIn);
+
 $detailsMessage = "";
 $passwordMessage = "";
+$subscriptionMessage = "";
 
 if(isset($_POST["saveDetailsButton"])) {
     $account = new Account($conn);
@@ -44,6 +50,43 @@ if(isset($_POST["savePasswordButton"])) {
                             </div>";
     }
 }
+if (isset($_GET['success']) && $_GET['success'] == 'true') {
+    $token = $_GET['token'];
+    $agreement = new \PayPal\Api\Agreement();
+
+    $subscriptionMessage = "<div class='alertError'>
+                            Something went wrong!
+                        </div>";
+  
+    try {
+      // Execute agreement
+      $agreement->execute($token, $apiContext);
+      
+     // Update user's account status
+     $result = BillingDetail::insertDetails($conn, $agreement, $token, $userLoggedIn);
+     $result = $result && $user->setIsSubscribed(1);
+
+     if($result) {
+         $subscriptionMessage = "<div class='alertSuccess'>
+                         You're all signed up!
+                     </div>";
+     }
+
+
+    } catch (PayPal\Exception\PayPalConnectionException $ex) {
+      echo $ex->getCode();
+      echo $ex->getData();
+      die($ex);
+    } catch (Exception $ex) {
+      die($ex);
+    }
+  } 
+  else if (isset($_GET['success']) && $_GET['success'] == 'false') {
+        $subscriptionMessage = "<div class='alertError'>
+            <span class='error'> User cancelled or something went wrong!</span>
+        </div>";
+  }
+
 
 ?>
 
@@ -102,13 +145,17 @@ if(isset($_POST["savePasswordButton"])) {
     <div class="formSection">
         <h2>Subscription</h2>
 
+        <div class="message">
+            <?php echo $subscriptionMessage; ?>
+        </div>
+
         <?php
 
         if($user->getIsSubscribed()) {
             echo "<h3>You are subscribed! Go to PayPal to cancel.</h3>";
         }
         else {
-            echo "<a href='billing.php'>Subscribe to Reeceflix</a>";
+            echo "<a href='billing.php'>Subscribe to WeWatch</a>";
         }
         ?>
     </div>
