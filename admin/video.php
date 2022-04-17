@@ -7,31 +7,9 @@
     <div class="layout-container">
         <?php include 'side-nav.inc.php'; ?>
         <div class="main">
-        <header class="header d-flex justify-content-end ">
-                <nav class="user-nav">
-                    <div class="user-nav__user dropdown">
-                        <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="img/user-1.jpg" alt="User photo" class="user-nav__user-photo">
-                            <span class="user-nav__user-name">Admin</span>
-                        </div>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a href="userProfile.php" class="dropdown-item">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                <span>Profile</span>
-                            
-                            </a>
-                            <a href="uploadMovie.php" class="dropdown-item"> 
-                                <i class="fa fa-upload" aria-hidden="true"></i> <span>Upload Movie</span>
-                            </a>
-                            <a href="uploadSeries.php" class="dropdown-item">
-                                <i class="fa fa-upload" aria-hidden="true"></i>
-                                <span>Upload Series</span>
-                            </a>
-                        </div>
-                    </div>
-
-                </nav>
-            </header>
+            <div class="d-flex justify-content-end">
+                <?php include 'header.inc.php'; ?>
+            </div>
             <div class="container">
                 <h1> Add Video </h1>
                 <form class="box py-2" enctype="multipart/form-data">
@@ -92,11 +70,18 @@
                         <input type="text" class="form-control" id="description" placeholder="description...." name="description" value="" required>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <div class="form-group">                  
                                 <label for="video"><b>Video : <b></label>
                                 <input type="file" name="video" id="video" class="form-control-file" required>  
                             </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="cross_icon hidden">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                       
+
                         </div>
                     </div>
                 
@@ -114,6 +99,8 @@
     
 </body>
 <script>
+    var ajaxCall;
+
     function update(){
         console.log("change status")
         const ismovie =  $(".movie-select").prop("hidden")
@@ -148,21 +135,24 @@
         formdata.append("description", description);
         formdata.append("name", name);
         formdata.append("ep", ep);
-        var ajax = new XMLHttpRequest();
-        ajax.upload.addEventListener("progress", progressHandler, false);
-        ajax.addEventListener("load", completeHandler, false);
-        ajax.addEventListener("error", errorHandler, false);
-        ajax.addEventListener("abort", abortHandler, false);
-        ajax.open("POST", "uploadVideo.php");
-        ajax.send(formdata);
+        ajaxCall = new XMLHttpRequest();
+        ajaxCall.upload.addEventListener("progress", progressHandler, false);
+        ajaxCall.addEventListener("load", completeHandler, false);
+        ajaxCall.addEventListener("error", errorHandler, false);
+        ajaxCall.addEventListener("abort", abortHandler, false);
+        ajaxCall.open("POST", "uploadVideo.php");
+        ajaxCall.send(formdata);
+        $(".cross_icon").toggleClass("hidden")
     }
     function progressHandler(event){
         $("#uploadBtn").text("Uploading....")
-        _("loaded_n_total").innerHTML = "Uploaded "+event.loaded+" bytes of "+event.total;
+       
+        // _("loaded_n_total").innerHTML = "Uploaded "+event.loaded+" bytes of "+event.total;
         var percent = (event.loaded / event.total) * 100;
         _("progressBar").classList.remove("hidden");
         _("progressBar").value = Math.round(percent);
         _("status").innerHTML = Math.round(percent)+"% uploaded... please wait";
+        
         if(percent >= 100){
             _("status").innerHTML = "Converting file to mp4... please wait";
         }
@@ -182,11 +172,16 @@
     }
     function errorHandler(event){
         _("status").innerHTML = "Upload Failed";
+        $(".cross_icon").toggleClass("hidden")
+        $("#uploadBtn").text("Submit")
     }
     function abortHandler(event){
         _("status").innerHTML = "Upload Aborted";
+        $(".cross_icon").toggleClass("hidden")
+        $("#uploadBtn").text("Submit")
     }
     function checkInput(name,description,release,title,file){
+       
         let error = document.createElement("span")
         error.classList.add("error");
         if(!title){
@@ -225,6 +220,11 @@
         $("#releaseDate").val('');
         $("#description").val('');
     }
+
+    $(document).on('click','.cross_icon', function(e){
+        ajaxCall.abort();
+        console.log("Canceled");
+    });
 
 </script>
 <script src="js/script.js"></script>

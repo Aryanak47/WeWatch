@@ -139,7 +139,8 @@ function getRecommendations(movieName) {
        
         },
         error: function(){
-        alert('Invalid Request');
+            $(".loader").delay(300).fadeOut();
+            $(".recommendation-section").html("");
         },
     });
 }

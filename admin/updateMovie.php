@@ -43,31 +43,10 @@
     <div class="layout-container">
         <?php include 'side-nav.inc.php'; ?>
         <div class="main">
-        <header class="header d-flex justify-content-end ">
-                <nav class="user-nav">
-                    <div class="user-nav__user dropdown">
-                        <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="img/user-1.jpg" alt="User photo" class="user-nav__user-photo">
-                            <span class="user-nav__user-name">Admin</span>
-                        </div>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a href="userProfile.php" class="dropdown-item">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                <span>Profile</span>
-                            
-                            </a>
-                            <a href="uploadMovie.php" class="dropdown-item"> 
-                                <i class="fa fa-upload" aria-hidden="true"></i> <span>Upload Movie</span>
-                            </a>
-                            <a href="uploadSeries.php" class="dropdown-item">
-                                <i class="fa fa-upload" aria-hidden="true"></i>
-                                <span>Upload Series</span>
-                            </a>
-                        </div>
-                    </div>
-
-                </nav>
-            </header>
+            <div class="d-flex justify-content-end">
+                    <?php include 'header.inc.php'; ?>
+            </div>
+       
             <div class="p-3 py-5 update-movie">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">

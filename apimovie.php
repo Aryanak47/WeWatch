@@ -2,8 +2,7 @@
     require_once("includes/header.php");
     if(!isset($_GET["id"])){
         ErrorMessage::show("No ID passed into page");
-        exit();
-    }
+    }  
 ?>
     
     <div class="movie-info">
@@ -24,17 +23,25 @@
             let id = '<?php echo $_GET['id']; ?>';
             $.ajax({
                 type: 'GET',
-                url:`https://api.themoviedb.org/3/movie/${id}?api_key=da65565c4f946371b1aa947018514022`,
+                url:`https://api.themoviedb.org/3/movie/${id}?api_key=YOUR KEY`,
 
                 success: function(movie_details){
+                    var movie_title = movie_details.original_title
+                    if(!movie_title){
+                        handleApiError("Movie was not found")
+                        return
+                    }
                     let html = show_details(movie_details,id);
-
                     $(".movie-info").html(html);
                 
                 },
-                error: function(){
-                    alert("API Error!");
-               
+                error: function(jqXHR,textStatus,errorThrown){
+                    let status = jqXHR.status;
+                    if(status == 404){
+                        handleApiError("Movie was not found")
+                    }else if(status == 500){
+                        handleApiError("Something went wrong")
+                    }
                 },
             });
         }
@@ -64,16 +71,11 @@
                         
             details = {
                 'title':movie_title,
-                'imdb_id':imdb_id,
                 'poster':poster,
                 'genres':my_genre || "unknown",
                 'overview':overview,
-                'rating':rating,
-                'vote_count':vote_count.toLocaleString(),
-                'release_date':release_date.toDateString().split(' ').slice(1).join(' '),
                 'runtime':runtime,
                 'status':status,
-                // 'rec_movies':JSON.stringify(arr),
                 
                 
             }
@@ -133,6 +135,13 @@
                         </div>
                     </div>`
             return html;
+        }
+
+        function handleApiError(msg){
+            $(".recommendation-section").html("");
+            let html = `<span class='errorBanner'>${msg}</span>`
+             $("body").append(html);
+
         }
     </script>
     </body>

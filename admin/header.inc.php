@@ -33,7 +33,7 @@
             <a href="video.php" class="dropdown-item"> 
                 <i class="fa fa-upload" aria-hidden="true"></i> <span>Upload Video</span>
             </a>
-            <a href="userProfile.php" class="dropdown-item">
+            <a href="../logout.php" class="dropdown-item">
                 <i class="fa fa-user" aria-hidden="true"></i>
                 <span>Logout</span>
               

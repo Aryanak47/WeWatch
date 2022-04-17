@@ -13,6 +13,10 @@
     }
 
     $video = new Video($conn, $_GET["id"]);
+    $id = $video->getId();
+    if(!isset($id)){
+        ErrorMessage::show("404 page not found");
+      }
     $video->incrementViews();
 
     $upNextVideo = VideoProvider::getUpNext($conn, $video);

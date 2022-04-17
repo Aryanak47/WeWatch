@@ -7,6 +7,9 @@
     $entityId = $_GET["id"];
     $entity = new Entity($conn, $entityId);
     $id = $entity->getId();
+    if(!isset($id)){
+      ErrorMessage::show("404 page not found");
+    }
     $videoId = VideoProvider::getEntityVideoForUser($conn, $id, $userLoggedIn);
     $video = new Video($conn, $videoId);
     $continue = $video->isInProgress($userLoggedIn);

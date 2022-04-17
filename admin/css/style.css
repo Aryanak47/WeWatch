@@ -592,3 +592,10 @@ width: 300px;
 .update-movie .breadcrumb{
 background-color: transparent !important;
 }
+
+.cross_icon{
+    color: orangered;
+    font-weight: 700;
+    font-size:22px;
+    cursor: pointer;
+}

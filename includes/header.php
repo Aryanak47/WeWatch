@@ -36,6 +36,7 @@ require_once("includes/classes/User.php");
  $og_image = "";
  $og_url = $SITE_URL;
  if($mypage =="entity.php"){
+    if(isset($_GET['id'])){
      $myPageId = FormSanitizer::getSafeValue($_GET['id']);
      $query = $conn->prepare("SELECT * FROM entities where id =:id ");
      $query->bindValue(':id',$myPageId);
@@ -44,6 +45,9 @@ require_once("includes/classes/User.php");
      $og_name = $videoInfo['name'];
      $og_image = $videoInfo['thumbnail'];
      $og_url = $SITE_URL."/entity.php?id=$myPageId";
+
+    }
+     
  }
    
  
@@ -58,8 +62,7 @@ require_once("includes/classes/User.php");
         <meta property="og:url" content="<?php echo $og_url ?>" />
         <meta property="og:site_name" content="<?php echo $SITE_URL."/"; ?>" />
         <title>Welcome to WeWatch</title>
-        <!-- custom csss -->
-        <link rel="stylesheet" type="text/css" href="assets/style/style.css" />
+     
         <!-- font -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

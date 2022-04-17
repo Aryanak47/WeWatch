@@ -22,7 +22,7 @@ navs.forEach(function(element) {
 
 function sortByValue(page) {
     let sort = $("#sort").val()
-    window.location.href = `http://localhost/wewatch/admin/${page}.php?sort=${sort}`
+    window.location.href = `http://127.0.0.1/wewatch/admin/${page}.php?sort=${sort}`
 }
 
 
