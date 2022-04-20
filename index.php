@@ -49,7 +49,7 @@
                   </p>
                   <div class="trending-list" data-animation-in="fadeInUp" data-delay-in="1.2">
                     <div class="text-primary title genres">
-                      Genres : <span class="text-body">Action</span>
+                      Genres : <span class="text-body"><?= $entity->getGenre() ?></span>
                     </div>
                   </div>
                   <div class="d-flex align-items-center  mt-4" data-animation-in="fadeInUp" data-delay-in="1.2">
@@ -218,56 +218,9 @@
         </div>
       </section>
     </div>
-    <footer class="iq-bg-dark">
-      <div class="footer-top">
-        <div class="container-fluid">
-          <div class="row footer-standard">
-            <div class="col-lg-6 col-md-6">
-              <div class="widget text-left">
-                <div>
-                  <ul class="menu p-0">
-                    <li><a href="#">Terms of Use</a></li>
-                    <li><a href="#">Privacy-Policy</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Watch List</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="widget text-left">
-                <div class="textwidget">
-                  <p><small>This is Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, quo tempore. Quasi rem rerum est in nulla atque quibusdam illo. this is footer and simple tsesxij is writen jkd. fsek hello how are you. please like and subscribe. footer ends .</small></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-6 mt-4 mt-lg-0 text-center">
-              <h6 class="footer-link-title text-center">
-                Follow Us:
-              </h6>
-              <ul class="info-share">
-                <li>
-                  <a href="#">
-                    <i>
-                    <fa class="fa fa-facebook"></fa>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i>
-                    <fa class="fa fa-youtube"></fa>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i>
-                    <fa class="fa fa-instagram"></fa>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+
+    <?php include_once("includes/footer.php") ?>
+
     
   </body>
 </html>

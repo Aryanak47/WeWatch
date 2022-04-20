@@ -49,6 +49,7 @@
             <source src='<?php echo $video->getFilePath(); ?>' type="video/mp4">
         </video>
     </div>
+    <?php include_once("includes/footer.php") ?>
 <script>
     initVideo("<?php echo $video->getId(); ?>", "<?php echo $userLoggedIn; ?>");
 </script>

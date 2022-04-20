@@ -23,7 +23,7 @@
             let id = '<?php echo $_GET['id']; ?>';
             $.ajax({
                 type: 'GET',
-                url:`https://api.themoviedb.org/3/movie/${id}?api_key=YOUR KEY`,
+                url:`https://api.themoviedb.org/3/movie/${id}?api_key=API_KEY`,
 
                 success: function(movie_details){
                     var movie_title = movie_details.original_title

@@ -36,6 +36,10 @@ class Video {
         return $this->sqlData["title"];
     }
 
+    public function getGenre() {
+        return $entity->getGenre();
+    }
+
     public function getDescription() {
         return $this->sqlData["description"];
     }

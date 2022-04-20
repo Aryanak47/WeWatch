@@ -46,6 +46,15 @@ class Entity {
     public function getCategoryId() {
         return $this->sqlData["categoryId"];
     }
+
+    public function getGenre() {
+        $query = $this->con->prepare("SELECT name FROM categories WHERE id=:id");
+        $query->bindValue(":id", $this->getCategoryId());
+        $query->execute();
+        $data = $query->fetch(PDO::FETCH_ASSOC);
+        return $data["name"];
+    }
+
     public function getSeasons() {
         $query = $this->con->prepare("SELECT * FROM videos WHERE entityId=:id
                                     AND isMovie=0 ORDER BY season, episode ASC");

@@ -60,5 +60,7 @@
         </div>
       </div>
      <?php echo $category->getTvShowsCategory(); ?>
+     <?php include_once("includes/footer.php") ?>
   </body>
+  
 </html>

@@ -78,7 +78,9 @@
 <?php if(count($entities) == 0) {
     echo "<h2 class='d-flex justify-content-center'> Nothing to show</h2>";
 } ?>
+<?php include_once("includes/footer.php") ?>
 </section>
+
 <script>
  $(".wish-btn").click(function (){
      $(".div1").remove();
