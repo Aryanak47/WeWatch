@@ -142,7 +142,7 @@
         ajaxCall.addEventListener("abort", abortHandler, false);
         ajaxCall.open("POST", "uploadVideo.php");
         ajaxCall.send(formdata);
-        $(".cross_icon").toggleClass("hidden")
+       
     }
     function progressHandler(event){
         $("#uploadBtn").text("Uploading....")
@@ -152,6 +152,8 @@
         _("progressBar").classList.remove("hidden");
         _("progressBar").value = Math.round(percent);
         _("status").innerHTML = Math.round(percent)+"% uploaded... please wait";
+
+        $(".cross_icon").toggleClass("hidden")
         
         if(percent >= 100){
             _("status").innerHTML = "Converting file to mp4... please wait";
@@ -223,6 +225,7 @@
 
     $(document).on('click','.cross_icon', function(e){
         ajaxCall.abort();
+        $(".cross_icon").toggleClass("hidden")
         console.log("Canceled");
     });
 

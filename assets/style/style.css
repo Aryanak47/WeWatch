@@ -170,13 +170,15 @@ header{
 .input__container  label {
     position:absolute;
     left: 4px;
-    top: 3px;
+    top: -16px;
     font-size:16px;
-    opacity: 0;
-    visibility: hidden;
+    margin: 5px 0;
+    /* opacity: 0; */
+    /* visibility: hidden; */
     transition: all .2s;
 }
-form input:focus ~ label {
+
+.input__container input:focus ~ label {
     color: var(--primary-color);
     top:-12px;
     opacity: 1;
@@ -1518,6 +1520,9 @@ background: rgba(0, 0, 0, 0.8);
 /* ***************** footer **************** */
 .footer-top{
     padding: 60px 0;
+}
+footer{
+    margin-top:60px;
 }
 
 footer .footer-standard .widget ul li{
